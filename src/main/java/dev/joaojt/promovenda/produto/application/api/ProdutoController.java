@@ -8,8 +8,8 @@ import dev.joaojt.promovenda.produto.application.service.ProdutoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@RestController
 @Log4j2
+@RestController
 @RequiredArgsConstructor
 public class ProdutoController implements ProdutoAPI{
 	

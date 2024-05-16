@@ -16,5 +16,6 @@ public class ProdutoNovoRequest {
 	private Long idPromocao;
 	@NotNull(message = "É obrigatório informar o valor do produto.")
 	private Double valor;
+	private Integer estoque = 0;
 	
 }

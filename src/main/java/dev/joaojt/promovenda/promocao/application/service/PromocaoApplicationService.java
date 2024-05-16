@@ -12,8 +12,8 @@ import dev.joaojt.promovenda.promocao.domain.Promocao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
-@Service
 @Log4j2
+@Service
 @RequiredArgsConstructor
 public class PromocaoApplicationService implements PromocaoService{
 	

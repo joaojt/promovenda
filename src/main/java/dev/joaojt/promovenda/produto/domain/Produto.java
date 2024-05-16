@@ -34,11 +34,13 @@ public class Produto {
     private Long idPromocao;
     @NotNull(message = "É obrigatório informar o valor do produto.")
 	private Double valor;
+    private Integer estoque = 0;
 
 	public void editaProduto(ProdutoEditaRequest produtoEdita) {
 		Optional.ofNullable(produtoEdita.getProduto()).ifPresent(produto -> this.produto = produto);	
 		Optional.ofNullable(produtoEdita.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);	
 		Optional.ofNullable(produtoEdita.getValor()).ifPresent(valor -> this.valor = valor);	
+		Optional.ofNullable(produtoEdita.getEstoque()).ifPresent(estoque -> this.estoque = estoque);	
 	
 	}
 
@@ -46,6 +48,7 @@ public class Produto {
 		this.produto = produtoNovo.getProduto();
 		Optional.ofNullable(produtoNovo.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);	
 		this.valor = produtoNovo.getValor();
+		Optional.ofNullable(produtoNovo.getEstoque()).ifPresent(estoque -> this.estoque = estoque);	
 	}
 
 }

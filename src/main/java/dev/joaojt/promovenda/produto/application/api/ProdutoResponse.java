@@ -13,12 +13,14 @@ public class ProdutoResponse {
 	private final String produto;
 	private final Long idPromocao;
 	private final Double valor;
+	private final Integer estoque;
 	
 	public ProdutoResponse(Produto produto) {
 		this.id = produto.getId();
 		this.produto = produto.getProduto();
 		this.idPromocao = produto.getIdPromocao();
 		this.valor = produto.getValor();
+		this.estoque = produto.getEstoque();
 	}
 
 	public static List<ProdutoResponse> converter(List<Produto> produtos) {

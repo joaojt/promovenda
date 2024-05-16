@@ -12,5 +12,6 @@ public class ProdutoEditaRequest {
     private String produto;
     private Long idPromocao;
     private Double valor;
+    private Integer estoque;
 
 }
