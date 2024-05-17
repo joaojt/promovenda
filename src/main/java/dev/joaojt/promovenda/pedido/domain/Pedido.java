@@ -1,10 +1,8 @@
 package dev.joaojt.promovenda.pedido.domain;
 
 import java.util.Date;
-import java.util.Optional;
 
 import dev.joaojt.promovenda.pedido.application.api.PedidoNovoRequest;
-import dev.joaojt.promovenda.produto.application.api.ProdutoNovoRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

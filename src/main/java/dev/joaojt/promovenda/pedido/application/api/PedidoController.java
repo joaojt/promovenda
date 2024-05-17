@@ -28,4 +28,13 @@ public class PedidoController implements PedidoAPI{
 		log.info("[finaliza] PedidoController - deletaPedido");	
 	}
 
+	@Override
+	public PedidoComItensResponse buscaPedidoComItens(Long idPedido) {
+		log.info("[inicia] PedidoController - buscaPedidoComItens");
+		log.info("[idPedido] {}", idPedido);
+		PedidoComItensResponse pedidoComItensResponse = pedidoService.buscaPedidoComItens(idPedido);
+		log.info("[finaliza] PedidoController - buscaPedidoComItens");
+		return pedidoComItensResponse;
+	}
+
 }
