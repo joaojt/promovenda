@@ -20,7 +20,7 @@ public interface PedidoItemAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	PedidoComItensResponse inserePedidoItem(@RequestBody @Valid PedidoItemNovoRequest pedidoItemNovo);
 	
-	@DeleteMapping(value = "/deleta/idpedido/{idPedido}/idproduto{idProduto}")
+	@DeleteMapping(value = "/deleta/idpedido/{idPedido}/idproduto/{idProduto}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaPedidoItem(@PathVariable Long idPedido, @PathVariable Long idProduto);
 
