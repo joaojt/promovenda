@@ -1,6 +1,7 @@
 package dev.joaojt.promovenda.produto.infra;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -55,6 +56,17 @@ public class ProdutoRepositoryDB implements ProdutoRepository{
 		log.info("[inicia] ProdutoRepositoryDB - deletaTodosProdutos");
 		produtoRepositoryJpa.deleteAll();
 		log.info("[finaliza] ProdutoRepositoryDB - deletaTodosProdutos");
+	}
+	
+	@Override
+	public void existeProdutoPorIdPromocao(Long idPromocao) {
+		log.info("[inicia] ProdutoRepositoryDB - existeProdutoPorIdPromocao");
+	    produtoRepositoryJpa.findFirstByIdPromocao(idPromocao)
+	    					.ifPresent(produto -> {
+	    						log.info("[finaliza] ProdutoRepositoryDB - existeProdutoPorIdPromocao");
+	    						throw APIException.build(HttpStatus.BAD_REQUEST, 
+	    								"Existe(m) produto(s) relacionado(s) à esta promoção, por isso não é possível excluí-la.");
+        });
 	}
 	
 }

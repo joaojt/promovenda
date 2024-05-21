@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
+import dev.joaojt.promovenda.produto.application.repository.ProdutoRepository;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoAtivaInativaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoNovaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoResponse;
@@ -18,6 +20,8 @@ import lombok.extern.log4j.Log4j2;
 public class PromocaoApplicationService implements PromocaoService{
 	
 	private final PromocaoRepository promocaoRepository;
+	private final ProdutoRepository produtoRepository;
+	private final PedidoItemRepository pedidoItemRepository;
 	
 	@Override
 	public PromocaoResponse inserePromocao(PromocaoNovaRequest promocaoNova) {
@@ -50,6 +54,16 @@ public class PromocaoApplicationService implements PromocaoService{
 		List<Promocao> promocoes = promocaoRepository.buscaTodasPromocoes();
 		log.info("[finaliza] PromocaoApplicationService - buscaTodasPromocoes");
 		return PromocaoResponse.converter(promocoes);
+	}
+
+	@Override
+	public void deletaPromocao(Long idPromocao) {
+		log.info("[inicia] PromocaoApplicationService - deletaPromocao");
+	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
+		produtoRepository.existeProdutoPorIdPromocao(idPromocao);
+		pedidoItemRepository.existePedidoItemPorIdPromocao(idPromocao);
+		promocaoRepository.deletaPromocao(promocao);
+		log.info("[finaliza] PromocaoApplicationService - deletaPromocao");
 	}	
 	
 }

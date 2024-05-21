@@ -19,4 +19,6 @@ public interface PedidoItemRepository {
 
 	void deletaPedidoItem(PedidoItem pedidoItem);
 
+	void existePedidoItemPorIdPromocao(Long idPromocao);
+
 }

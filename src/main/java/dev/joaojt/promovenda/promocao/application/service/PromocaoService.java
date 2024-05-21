@@ -16,4 +16,6 @@ public interface PromocaoService {
 
 	List<PromocaoResponse> buscaTodasPromocoes();
 
+	void deletaPromocao(Long idPromocao);
+
 }

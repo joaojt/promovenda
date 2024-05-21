@@ -1,7 +1,9 @@
 package dev.joaojt.promovenda.pedido.application.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -50,7 +52,19 @@ public class PedidoApplicationService implements PedidoService{
 		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);	
 		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, pedidoItens);
 		log.info("[finaliza] PedidoApplicationService - buscaPedidoComItens");	
-		return pedidoComItensResponse;
+		return pedidoComItensResponse;		
 	}
-
+	
+    public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+    	log.info("[inicia] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
+        List<Pedido> pedidos = pedidoRepository.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
+        log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
+        return pedidos.stream()
+        		.map(pedido -> {
+                    List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedido.getId());
+                    return new PedidoComItensResponse(pedido, pedidoItens);
+                })
+                .collect(Collectors.toList());
+    }	
+	
 }

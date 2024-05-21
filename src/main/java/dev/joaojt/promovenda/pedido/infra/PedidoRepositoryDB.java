@@ -1,5 +1,8 @@
 package dev.joaojt.promovenda.pedido.infra;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
@@ -38,6 +41,14 @@ public class PedidoRepositoryDB implements PedidoRepository{
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Pedido não encontrado."));
 		log.info("[finaliza] PedidoRepositoryDB - buscaPedidoPorId");
 		return pedido;
+	}
+
+	@Override
+	public List<Pedido> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+        log.info("[inicia] PedidoRepositoryDB - buscaPedidosComItensPorPeriodo");
+        List<Pedido> pedidos = pedidoRepositoryJpa.findPedidosByPeriodo(dataInicial, dataFinal);
+        log.info("[finaliza] PedidoRepositoryDB - buscaPedidosComItensPorPeriodo");
+        return pedidos;
 	}
 
 }

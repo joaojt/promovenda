@@ -39,8 +39,15 @@ public class PromocaoRepositoryDB implements PromocaoRepository{
 	public List<Promocao> buscaTodasPromocoes() {
 		log.info("[inicia] PromocaoRepositoryDB - buscaTodasPromocoes");
 		List<Promocao> promocoes = promocaoRepositoryJpa.findAll();
-		log.info("[finaliza] PromocaoRepositoryDB - buscaTodasPromocoes");
+ 		log.info("[finaliza] PromocaoRepositoryDB - buscaTodasPromocoes");
 		return promocoes;
+	}
+
+	@Override
+	public void deletaPromocao(Promocao promocao) {
+		log.info("[inicia] PromocaoRepositoryDB - deletaPromocao");
+		promocaoRepositoryJpa.delete(promocao);
+		log.info("[finaliza] PromocaoRepositoryDB - deletaPromocao");		
 	}
 
 }

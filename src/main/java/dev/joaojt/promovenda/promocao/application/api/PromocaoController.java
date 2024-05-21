@@ -47,4 +47,11 @@ public class PromocaoController implements PromocaoAPI{
 		return promocoes;
 	}
 
+	@Override
+	public void deletaPromocao(Long idPromocao) {
+		log.info("[inicia] PromocaoController - deletaPromocao");			
+		promocaoService.deletaPromocao(idPromocao);
+		log.info("[finaliza] PromocaoController - deletaPromocao");		
+	}
+
 }

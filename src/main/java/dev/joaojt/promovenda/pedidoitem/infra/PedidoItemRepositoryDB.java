@@ -3,8 +3,10 @@ package dev.joaojt.promovenda.pedidoitem.infra;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
+import dev.joaojt.promovenda.handler.APIException;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +63,17 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 		log.info("[inicia] PedidoItemRepositoryDB - deletaPedidoItem");
 		pedidoItemRepositoryJpa.delete(pedidoItem);
 		log.info("[finaliza] PedidoItemRepositoryDB - deletaPedidoItem");
+	}
+
+	@Override
+	public void existePedidoItemPorIdPromocao(Long idPromocao) {
+		log.info("[inicia] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
+	    pedidoItemRepositoryJpa.findFirstByIdPromocao(idPromocao)
+	    					.ifPresent(pedidoItem -> {
+	    						log.info("[finaliza] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
+	    						throw APIException.build(HttpStatus.BAD_REQUEST,
+	    								"Existe(m) item(s) de pedido(s) relacionado(s) à esta promoção, por isso não é possível excluí-la.");
+        });
 	}
 	
 }

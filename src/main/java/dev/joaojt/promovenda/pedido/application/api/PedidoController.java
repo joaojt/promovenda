@@ -1,5 +1,8 @@
 package dev.joaojt.promovenda.pedido.application.api;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.joaojt.promovenda.pedido.application.service.PedidoService;
@@ -35,6 +38,14 @@ public class PedidoController implements PedidoAPI{
 		PedidoComItensResponse pedidoComItensResponse = pedidoService.buscaPedidoComItens(idPedido);
 		log.info("[finaliza] PedidoController - buscaPedidoComItens");
 		return pedidoComItensResponse;
+	}
+
+	@Override
+	public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
+		log.info("[inicia] PedidoController - buscaPedidosComItensPorPeriodo");
+		List<PedidoComItensResponse> pedidosComItensResponse = pedidoService.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
+		log.info("[finaliza] PedidoController - buscaPedidosComItensPorPeriodo");
+		return pedidosComItensResponse;
 	}
 
 }

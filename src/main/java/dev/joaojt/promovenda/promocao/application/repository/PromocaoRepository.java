@@ -11,5 +11,7 @@ public interface PromocaoRepository {
 	Promocao buscaPromocaoPorId(Long idPromocao);
 
 	List<Promocao> buscaTodasPromocoes();
+
+	void deletaPromocao(Promocao promocao);
 	
 }

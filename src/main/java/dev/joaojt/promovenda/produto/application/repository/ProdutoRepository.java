@@ -15,5 +15,7 @@ public interface ProdutoRepository {
 	List<Produto> buscaTodosProdutos();
 
 	void deletaTodosProdutos();
+
+	void existeProdutoPorIdPromocao(Long idPromocao);
 	
 }
