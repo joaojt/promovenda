@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -32,23 +32,30 @@ public class Produto {
     @NotBlank(message = "A descrição do produto não pode ser nula ou vazia.")
 	private String produto;
     private Long idPromocao;
-    @NotNull(message = "É obrigatório informar o valor do produto.")
-	private Double valor;
-    private Integer estoque = 0;
+    @Positive(message = "O valor do produto deve ser maior que zero.")
+	private double valor;
+    private int estoque;
 
 	public void editaProduto(ProdutoEditaRequest produtoEdita) {
 		Optional.ofNullable(produtoEdita.getProduto()).ifPresent(produto -> this.produto = produto);	
-		Optional.ofNullable(produtoEdita.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);	
-		Optional.ofNullable(produtoEdita.getValor()).ifPresent(valor -> this.valor = valor);	
-		Optional.ofNullable(produtoEdita.getEstoque()).ifPresent(estoque -> this.estoque = estoque);	
-	
+		Optional.ofNullable(produtoEdita.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
+		Optional.ofNullable(produtoEdita.getValor()).filter(valor -> valor > 0).ifPresent(valor -> this.valor = valor);
+		Optional.ofNullable(produtoEdita.getEstoque()).filter(estoque -> estoque > 0).ifPresent(estoque -> this.estoque = estoque);	
 	}
 
 	public Produto(ProdutoNovoRequest produtoNovo) {
 		this.produto = produtoNovo.getProduto();
 		Optional.ofNullable(produtoNovo.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);	
 		this.valor = produtoNovo.getValor();
-		Optional.ofNullable(produtoNovo.getEstoque()).ifPresent(estoque -> this.estoque = estoque);	
+		Optional.ofNullable(produtoNovo.getEstoque()).filter(estoque -> estoque > 0).ifPresent(estoque -> this.estoque = estoque);	
+	}
+
+	public void editaEstoqueSubtrai(int estoque) {
+		this.estoque -= estoque;
+	}
+
+	public void editaEstoqueSoma(int estoque) {
+		this.estoque += estoque;
 	}
 
 }

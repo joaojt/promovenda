@@ -1,6 +1,6 @@
 package dev.joaojt.promovenda.pedido.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import dev.joaojt.promovenda.pedido.application.api.PedidoNovoRequest;
 import jakarta.persistence.Entity;
@@ -29,7 +29,7 @@ public class Pedido {
     @Size(message = "O nome do cliente deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
     @NotBlank(message = "O nome do cliente não pode ser nulo ou vazio.")
 	private String cliente;
-	private Date data = new Date();
+    private LocalDateTime data = LocalDateTime.now();
 
 	public Pedido(PedidoNovoRequest pedidoNovo) {
 		this.cliente = pedidoNovo.getCliente();

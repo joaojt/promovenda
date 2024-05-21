@@ -1,7 +1,7 @@
 package dev.joaojt.promovenda.produto.application.api;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +14,8 @@ public class ProdutoNovoRequest {
     @NotBlank(message = "A descrição do produto não pode ser nula ou vazia.")
 	private String produto;
 	private Long idPromocao;
-	@NotNull(message = "É obrigatório informar o valor do produto.")
-	private Double valor;
-	private Integer estoque = 0;
+	@Positive(message = "O valor do produto deve ser maior que zero.")
+	private double valor;
+	private int estoque;
 	
 }

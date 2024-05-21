@@ -19,11 +19,11 @@ public class ProdutoRepositoryDB implements ProdutoRepository{
 	private final ProdutoRepositoryJpa produtoRepositoryJpa;
 	
 	@Override
-	public Produto salvaProduto(Produto produtoNovo) {
+	public Produto salvaProduto(Produto produto) {
 		log.info("[inicia] ProdutoRepositoryDB - salvaProduto");
-		Produto produto = produtoRepositoryJpa.save(produtoNovo);
+		Produto produtoSalvo = produtoRepositoryJpa.save(produto);
 		log.info("[finaliza] ProdutoRepositoryDB - salvaProduto");
-		return produto; 
+		return produtoSalvo; 
 	}
 
 	@Override

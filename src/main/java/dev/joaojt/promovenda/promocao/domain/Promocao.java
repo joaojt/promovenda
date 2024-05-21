@@ -1,7 +1,5 @@
 package dev.joaojt.promovenda.promocao.domain;
 
-import java.util.Optional;
-
 import dev.joaojt.promovenda.promocao.application.api.PromocaoAtivaInativaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoNovaRequest;
 import jakarta.persistence.Entity;
@@ -9,7 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,11 +29,11 @@ public class Promocao {
     @Size(message = "A descrição da promoção deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
     @NotBlank(message = "A descrição da promoção não pode ser nula ou vazia.")
 	private String promocao;
-    @NotNull(message = "É obrigatório informar a quantidade de compra.")
-    private Integer qtdeCompra;
-    @NotNull(message = "É obrigatório informar a quantidade de pagamento.")
-    private Integer qtdePgto;
-    private Boolean ativa = true;
+    @Positive(message = "A quantidade de compra deve ser maior que zero.")
+    private int qtdeCompra;
+    @Positive(message = "A quantidade de pagamento deve ser maior que zero.")
+    private int qtdePgto;
+    private boolean ativa;
 
 	public void ativaInativaPromocao(PromocaoAtivaInativaRequest promocaoAtivaInativa) {
 		this.ativa = promocaoAtivaInativa.getAtiva();	
@@ -45,7 +43,7 @@ public class Promocao {
 		this.promocao = promocaoNova.getPromocao();
 		this.qtdeCompra = promocaoNova.getQtdeCompra();
 		this.qtdePgto = promocaoNova.getQtdePgto();
-		Optional.ofNullable(promocaoNova.getAtiva()).ifPresent(ativa -> this.ativa = ativa);	
+		this.ativa = promocaoNova.isAtiva();
 	}
 
 }

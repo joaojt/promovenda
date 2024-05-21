@@ -35,10 +35,10 @@ public class PedidoApplicationService implements PedidoService{
 	public void deletaPedido(Long idPedido) {
 		log.info("[inicia] PedidoApplicationService - deletaPedido");
 		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
-		List<PedidoItem> itensPedido = pedidoItemRepository.buscaItensPedido(idPedido);
-	    Optional.ofNullable(itensPedido)
+		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);
+	    Optional.ofNullable(pedidoItens)
 	    		.filter(itens -> !itens.isEmpty())
-	    		.ifPresent(pedidoItemRepository::deletaItensPedido);
+	    		.ifPresent(pedidoItemRepository::deletaPedidoItens);
 		pedidoRepository.deletaPedido(pedido);
 		log.info("[finaliza] PedidoApplicationService - deletaPedido");	
 	}
@@ -47,8 +47,8 @@ public class PedidoApplicationService implements PedidoService{
 	public PedidoComItensResponse buscaPedidoComItens(Long idPedido) {
 		log.info("[inicia] PedidoApplicationService - buscaPedidoComItens");
 		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
-		List<PedidoItem> itensPedido = pedidoItemRepository.buscaItensPedido(idPedido);	
-		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, itensPedido);
+		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);	
+		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, pedidoItens);
 		log.info("[finaliza] PedidoApplicationService - buscaPedidoComItens");	
 		return pedidoComItensResponse;
 	}

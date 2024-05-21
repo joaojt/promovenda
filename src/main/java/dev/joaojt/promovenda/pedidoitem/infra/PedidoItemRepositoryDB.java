@@ -1,6 +1,7 @@
 package dev.joaojt.promovenda.pedidoitem.infra;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,19 +18,49 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 	private final PedidoItemRepositoryJpa pedidoItemRepositoryJpa;
 	
 	@Override
-	public List<PedidoItem> buscaItensPedido(Long idPedido) {
-		log.info("[inicia] PedidoItemRepositoryDB - buscaItensPedido");
-		List<PedidoItem> itensPedido = pedidoItemRepositoryJpa.findAllByIdPedidoOrderByIdAsc(idPedido);
-		log.info("[finaliza] PedidoItemRepositoryDB - buscaItensPedido");
-		return itensPedido;
+	public List<PedidoItem> buscaPedidoItens(Long idPedido) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaPedidoItens");
+		List<PedidoItem> pedidoItens = pedidoItemRepositoryJpa.findAllByIdPedidoOrderByIdAsc(idPedido);
+		log.info("[finaliza] PedidoItemRepositoryDB - buscaPedidoItens");
+		return pedidoItens;
 	}
 
 	@Override
-	public void deletaItensPedido(List<PedidoItem> itensPedido) {
-		log.info("[inicia] PedidoItemRepositoryDB - deletaItensPedido");
-		pedidoItemRepositoryJpa.deleteAll(itensPedido);
-		log.info("[finaliza] PedidoItemRepositoryDB - deletaItensPedido");
-		
+	public void deletaPedidoItens(List<PedidoItem> pedidoItens) {
+		log.info("[inicia] PedidoItemRepositoryDB - deletaPedidoItens");
+		pedidoItemRepositoryJpa.deleteAll(pedidoItens);
+		log.info("[finaliza] PedidoItemRepositoryDB - deletaPedidoItens");
+	}
+
+	@Override
+	public PedidoItem salvaPedidoItem(PedidoItem pedidoItem) {
+		log.info("[inicia] PedidoItemRepositoryDB - salvaPedidoItem");
+		PedidoItem itemPedido = pedidoItemRepositoryJpa.save(pedidoItem);
+		log.info("[finaliza] PedidoItemRepositoryDB - salvaPedidoItem");
+		return itemPedido;
+	}
+
+	@Override
+	public Boolean buscaSePedidoItemJaExiste(Long idPedido, Long idProduto) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaSePedidoItemJaExiste");
+		Boolean pedidoItemJaExiste = pedidoItemRepositoryJpa.findByIdPedidoAndIdProduto(idPedido, idProduto).isPresent();
+		log.info("[finaliza] PedidoItemRepositoryDB - buscaSePedidoItemJaExiste");
+		return pedidoItemJaExiste;
+	}
+
+	@Override
+	public Optional<PedidoItem> buscaPedidoItemExistente(Long idPedido, Long idProduto) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaPedidoItem");
+		Optional<PedidoItem> pedidoItem = pedidoItemRepositoryJpa.findByIdPedidoAndIdProduto(idPedido, idProduto);
+		log.info("[finaliza] PedidoItemRepositoryDB - buscaPedidoItem");
+		return pedidoItem;
+	}
+
+	@Override
+	public void deletaPedidoItem(PedidoItem pedidoItem) {
+		log.info("[inicia] PedidoItemRepositoryDB - deletaPedidoItem");
+		pedidoItemRepositoryJpa.delete(pedidoItem);
+		log.info("[finaliza] PedidoItemRepositoryDB - deletaPedidoItem");
 	}
 	
 }

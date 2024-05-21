@@ -1,6 +1,6 @@
 package dev.joaojt.promovenda.pedido.application.api;
 
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +12,13 @@ public class PedidoResponse {
 	
 	private final Long id;
 	private final String cliente;
-	private final Date data;
-	
+    private final String data;
+
 	public PedidoResponse(Pedido pedido) {
 		this.id = pedido.getId();
 		this.cliente = pedido.getCliente();
-		this.data = pedido.getData();
+        DateTimeFormatter formatoDesejado = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        this.data = pedido.getData().format(formatoDesejado);		
 	}
 
 	public static List<PedidoResponse> converter(List<Pedido> pedidos) {

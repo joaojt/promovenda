@@ -12,8 +12,8 @@ public class ProdutoResponse {
 	private final Long id;
 	private final String produto;
 	private final Long idPromocao;
-	private final Double valor;
-	private final Integer estoque;
+	private final double valor;
+	private final int estoque;
 	
 	public ProdutoResponse(Produto produto) {
 		this.id = produto.getId();

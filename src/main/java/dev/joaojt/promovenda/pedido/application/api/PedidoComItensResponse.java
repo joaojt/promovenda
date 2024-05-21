@@ -1,6 +1,6 @@
 package dev.joaojt.promovenda.pedido.application.api;
 
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,13 +13,21 @@ public class PedidoComItensResponse {
 
 	private Long id;
 	private String cliente;
-	private Date data;
+	private String data;	
+	private double vlrTotalPedido;
     private List<ItemResponse> itens;  
 
 	public PedidoComItensResponse(Pedido pedido, List<PedidoItem> itensPedido) {
 	    this.id = pedido.getId();
 	    this.cliente = pedido.getCliente();
-	    this.data = pedido.getData();
+	    
+        DateTimeFormatter formatoDesejado = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        this.data = pedido.getData().format(formatoDesejado);		
+        
+        this.vlrTotalPedido = itensPedido.stream()
+                .mapToDouble(item -> item.getVlrTotal() > 0 ? item.getVlrTotal() : 0.0)
+                .sum();    
+        
 	    this.itens = itensPedido.stream()
 	                            .map(item -> new ItemResponse(
 	                                item.getId(),
@@ -43,7 +51,7 @@ public class PedidoComItensResponse {
     	private Double vlrUnitario;
     	private Double vlrTotal;	
     	
-        public ItemResponse(Long id, Long idPedido, Long idProduto, Long idPromocao, Integer qtde, Double vlrUnitario, Double vlrTotal) {
+        public ItemResponse(Long id, Long idPedido, Long idProduto, Long idPromocao, int qtde, double vlrUnitario, double vlrTotal) {
             this.id = id;
             this.idPedido = idPedido;
             this.idProduto = idProduto;
@@ -52,5 +60,6 @@ public class PedidoComItensResponse {
             this.vlrUnitario = vlrUnitario;
             this.vlrTotal = vlrTotal;
         }  	
-    }	
+    }
+    
 }
