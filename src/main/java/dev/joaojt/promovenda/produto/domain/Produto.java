@@ -37,17 +37,19 @@ public class Produto {
     private int estoque;
 
 	public void editaProduto(ProdutoEditaRequest produtoEdita) {
-		Optional.ofNullable(produtoEdita.getProduto()).ifPresent(produto -> this.produto = produto);	
+		Optional.ofNullable(produtoEdita.getProduto()).ifPresent(produto -> this.produto = produto);
 		Optional.ofNullable(produtoEdita.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
 		Optional.ofNullable(produtoEdita.getValor()).filter(valor -> valor > 0).ifPresent(valor -> this.valor = valor);
-		Optional.ofNullable(produtoEdita.getEstoque()).filter(estoque -> estoque > 0).ifPresent(estoque -> this.estoque = estoque);	
+		Optional.ofNullable(produtoEdita.getEstoque()).filter(estoque -> estoque > 0)
+				.ifPresent(estoque -> this.estoque = estoque);
 	}
 
 	public Produto(ProdutoNovoRequest produtoNovo) {
 		this.produto = produtoNovo.getProduto();
-		Optional.ofNullable(produtoNovo.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);	
+		Optional.ofNullable(produtoNovo.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
 		this.valor = produtoNovo.getValor();
-		Optional.ofNullable(produtoNovo.getEstoque()).filter(estoque -> estoque > 0).ifPresent(estoque -> this.estoque = estoque);	
+		Optional.ofNullable(produtoNovo.getEstoque()).filter(estoque -> estoque > 0)
+				.ifPresent(estoque -> this.estoque = estoque);
 	}
 
 	public void editaEstoqueSubtrai(int estoque) {

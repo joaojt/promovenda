@@ -36,29 +36,28 @@ public class PedidoItem {
 	private double vlrUnitario;
 	private double vlrTotal;	
 	
-	//O objeto promocao pode estar nulo
 	public PedidoItem(PedidoItemNovoRequest pedidoItemNovo, Produto produto, Promocao promocao) {
 		this.idPedido = pedidoItemNovo.getIdPedido();
 		this.idProduto = pedidoItemNovo.getIdProduto();
 		Optional.ofNullable(produto.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
 		this.qtde = pedidoItemNovo.getQtde();
 		this.vlrUnitario = produto.getValor();
-		this.vlrTotal = this.idPromocao != null && promocao.isAtiva() ?
-			    calculaVlrTotalItemComPromocao(produto.getValor(), promocao.getQtdeCompra(), promocao.getQtdePgto(), pedidoItemNovo.getQtde()) :
-			    produto.getValor() * pedidoItemNovo.getQtde();		
+		this.vlrTotal = this.idPromocao != null && promocao.isAtiva()
+				? calculaVlrTotalItemComPromocao(produto.getValor(), promocao.getQtdeCompra(), promocao.getQtdePgto(), pedidoItemNovo.getQtde())
+				: produto.getValor() * pedidoItemNovo.getQtde();
 	}
-	
+
 	private Double calculaVlrTotalItemComPromocao(double valorProduto, int qtdeCompra, int qtdePgto, int qtdeItens) {
-        int qtdePromocao = qtdeItens / qtdeCompra;
-        int qtdeRestante = qtdeItens % qtdeCompra;
-        return qtdePromocao * qtdePgto * valorProduto + qtdeRestante * valorProduto;
-    }
+		int qtdePromocao = qtdeItens / qtdeCompra;
+		int qtdeRestante = qtdeItens % qtdeCompra;
+		return qtdePromocao * qtdePgto * valorProduto + qtdeRestante * valorProduto;
+	}
 
 	public void incrementaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao) {
 		this.qtde = this.qtde + pedidoItemNovo.getQtde();
-		this.vlrTotal = this.idPromocao != null && promocao.isAtiva() ?
-			    calculaVlrTotalItemComPromocao(this.vlrUnitario, promocao.getQtdeCompra(), promocao.getQtdePgto(), this.qtde) :
-			    this.vlrUnitario * this.qtde;
+		this.vlrTotal = this.idPromocao != null && promocao.isAtiva()
+				? calculaVlrTotalItemComPromocao(this.vlrUnitario, promocao.getQtdeCompra(), promocao.getQtdePgto(), this.qtde)
+				: this.vlrUnitario * this.qtde;
 	}
 
 }

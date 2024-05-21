@@ -38,11 +38,10 @@ public class PedidoApplicationService implements PedidoService{
 		log.info("[inicia] PedidoApplicationService - deletaPedido");
 		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
 		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);
-	    Optional.ofNullable(pedidoItens)
-	    		.filter(itens -> !itens.isEmpty())
-	    		.ifPresent(pedidoItemRepository::deletaPedidoItens);
+		Optional.ofNullable(pedidoItens).filter(itens -> !itens.isEmpty())
+				.ifPresent(pedidoItemRepository::deletaPedidoItens);
 		pedidoRepository.deletaPedido(pedido);
-		log.info("[finaliza] PedidoApplicationService - deletaPedido");	
+		log.info("[finaliza] PedidoApplicationService - deletaPedido");
 	}
 
 	@Override
@@ -55,16 +54,14 @@ public class PedidoApplicationService implements PedidoService{
 		return pedidoComItensResponse;		
 	}
 	
-    public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
-    	log.info("[inicia] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
-        List<Pedido> pedidos = pedidoRepository.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
-        log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
-        return pedidos.stream()
-        		.map(pedido -> {
-                    List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedido.getId());
-                    return new PedidoComItensResponse(pedido, pedidoItens);
-                })
-                .collect(Collectors.toList());
-    }	
+	public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial,LocalDateTime dataFinal) {
+		log.info("[inicia] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
+		List<Pedido> pedidos = pedidoRepository.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
+		log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
+		return pedidos.stream().map(pedido -> {
+			List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedido.getId());
+			return new PedidoComItensResponse(pedido, pedidoItens);
+		}).collect(Collectors.toList());
+	}
 	
 }

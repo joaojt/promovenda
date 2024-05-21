@@ -54,4 +54,11 @@ public class PromocaoController implements PromocaoAPI{
 		log.info("[finaliza] PromocaoController - deletaPromocao");		
 	}
 
+	@Override
+	public void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita) {
+		log.info("[inicia] PromocaoController - editaPromocao");			
+		promocaoService.editaPromocao(idPromocao, promocaoEdita);
+		log.info("[finaliza] PromocaoController - editaPromocao");		
+	}
+
 }

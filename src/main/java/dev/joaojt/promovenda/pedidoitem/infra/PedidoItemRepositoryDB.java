@@ -68,12 +68,11 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 	@Override
 	public void existePedidoItemPorIdPromocao(Long idPromocao) {
 		log.info("[inicia] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
-	    pedidoItemRepositoryJpa.findFirstByIdPromocao(idPromocao)
-	    					.ifPresent(pedidoItem -> {
-	    						log.info("[finaliza] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
-	    						throw APIException.build(HttpStatus.BAD_REQUEST,
-	    								"Existe(m) item(s) de pedido(s) relacionado(s) à esta promoção, por isso não é possível excluí-la.");
-        });
+		pedidoItemRepositoryJpa.findFirstByIdPromocao(idPromocao).ifPresent(pedidoItem -> {
+			log.info("[finaliza] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
+			throw APIException.build(HttpStatus.BAD_REQUEST,
+					"Existe(m) item(s) de pedido(s) relacionado(s) à esta promoção, por isso não é possível excluí-la ou editá-la.");
+		});
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.produto.application.repository.ProdutoRepository;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoAtivaInativaRequest;
+import dev.joaojt.promovenda.promocao.application.api.PromocaoEditaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoNovaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoResponse;
 import dev.joaojt.promovenda.promocao.application.repository.PromocaoRepository;
@@ -64,6 +65,17 @@ public class PromocaoApplicationService implements PromocaoService{
 		pedidoItemRepository.existePedidoItemPorIdPromocao(idPromocao);
 		promocaoRepository.deletaPromocao(promocao);
 		log.info("[finaliza] PromocaoApplicationService - deletaPromocao");
+	}
+
+	@Override
+	public void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita) {
+		log.info("[inicia] PromocaoApplicationService - editaPromocao");
+	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
+		pedidoItemRepository.existePedidoItemPorIdPromocao(idPromocao);		
+		promocao.editaPromocao(promocaoEdita);
+		promocaoRepository.salvaPromocao(promocao);
+		log.info("[finaliza] PromocaoApplicationService - editaPromocao");
+		
 	}	
 	
 }

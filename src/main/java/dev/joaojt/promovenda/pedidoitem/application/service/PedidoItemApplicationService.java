@@ -59,7 +59,7 @@ public class PedidoItemApplicationService implements PedidoItemService{
 	public void deletaPedidoItem(Long idPedido, Long idProduto) {
 		log.info("[inicia] PedidoItemApplicationService - deletaPedidoItem");
 		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
-                .orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));
+				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));
 		Integer qtdePedidoItem = pedidoItem.getQtde();
 		pedidoItemRepository.deletaPedidoItem(pedidoItem);
 		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);

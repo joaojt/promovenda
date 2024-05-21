@@ -1,6 +1,9 @@
 package dev.joaojt.promovenda.promocao.domain;
 
+import java.util.Optional;
+
 import dev.joaojt.promovenda.promocao.application.api.PromocaoAtivaInativaRequest;
+import dev.joaojt.promovenda.promocao.application.api.PromocaoEditaRequest;
 import dev.joaojt.promovenda.promocao.application.api.PromocaoNovaRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -44,6 +47,15 @@ public class Promocao {
 		this.qtdeCompra = promocaoNova.getQtdeCompra();
 		this.qtdePgto = promocaoNova.getQtdePgto();
 		this.ativa = promocaoNova.isAtiva();
+	}
+
+	public void editaPromocao(PromocaoEditaRequest promocaoEdita) {
+		Optional.ofNullable(promocaoEdita.getPromocao()).ifPresent(promocao -> this.promocao = promocao);
+		Optional.ofNullable(promocaoEdita.getQtdeCompra()).filter(qtdeCompra -> qtdeCompra > 0)
+				.ifPresent(qtdeCompra -> this.qtdeCompra = qtdeCompra);
+		Optional.ofNullable(promocaoEdita.getQtdePgto()).filter(qtdePgto -> qtdePgto > 0)
+				.ifPresent(qtdePgto -> this.qtdePgto = qtdePgto);
+		Optional.ofNullable(promocaoEdita.getAtiva()).ifPresent(ativa -> this.ativa = ativa);
 	}
 
 }

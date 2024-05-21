@@ -40,4 +40,8 @@ public interface PromocaoAPI {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaPromocao(@PathVariable Long idPromocao);
 	
+	@PatchMapping(value = "/edita/{idPromocao}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	void editaPromocao(@PathVariable Long idPromocao,@RequestBody @Valid PromocaoEditaRequest promocaoEdita);
+	
 }
