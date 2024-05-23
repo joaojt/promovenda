@@ -14,6 +14,7 @@ import dev.joaojt.promovenda.pedido.application.repository.PedidoRepository;
 import dev.joaojt.promovenda.pedido.domain.Pedido;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
+import dev.joaojt.promovenda.promocao.application.repository.PromocaoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -24,6 +25,7 @@ public class PedidoApplicationService implements PedidoService{
 	
 	private final PedidoRepository pedidoRepository;
 	private final PedidoItemRepository pedidoItemRepository;
+	private final PromocaoRepository promocaoRepository;
 	
 	@Override
 	public PedidoResponse inserePedido(PedidoNovoRequest pedidoNovo) {
@@ -48,8 +50,8 @@ public class PedidoApplicationService implements PedidoService{
 	public PedidoComItensResponse buscaPedidoComItens(Long idPedido) {
 		log.info("[inicia] PedidoApplicationService - buscaPedidoComItens");
 		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
-		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);	
-		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, pedidoItens);
+		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);
+		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, pedidoItens, promocaoRepository);
 		log.info("[finaliza] PedidoApplicationService - buscaPedidoComItens");	
 		return pedidoComItensResponse;		
 	}
@@ -60,7 +62,7 @@ public class PedidoApplicationService implements PedidoService{
 		log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
 		return pedidos.stream().map(pedido -> {
 			List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedido.getId());
-			return new PedidoComItensResponse(pedido, pedidoItens);
+			return new PedidoComItensResponse(pedido, pedidoItens, promocaoRepository);
 		}).collect(Collectors.toList());
 	}
 	

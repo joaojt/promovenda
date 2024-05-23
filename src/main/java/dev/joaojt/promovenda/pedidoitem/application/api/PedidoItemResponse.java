@@ -13,15 +13,15 @@ public class PedidoItemResponse {
 	private final Long idPedido;
 	private final Long idProduto;
 	private final Long idPromocao;
-	private final int qtde;
-	private final double vlrUnitario;
-	private final double vlrTotal;
+	private final Integer qtde;
+	private final Double vlrUnitario;
+	private final Double vlrTotal;
 	
 	public PedidoItemResponse (PedidoItem pedidoItem) {
 		this.id = pedidoItem.getId();
 		this.idPedido = pedidoItem.getIdPedido();
 		this.idProduto = pedidoItem.getIdProduto();
-		this.idPromocao = pedidoItem.getIdPromocao();
+		this.idPromocao = pedidoItem.getIdPromocao();		
 		this.qtde = pedidoItem.getQtde();
 		this.vlrUnitario = pedidoItem.getVlrUnitario();
 		this.vlrTotal = pedidoItem.getVlrTotal();

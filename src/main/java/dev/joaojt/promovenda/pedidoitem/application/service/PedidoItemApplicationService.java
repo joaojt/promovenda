@@ -51,10 +51,10 @@ public class PedidoItemApplicationService implements PedidoItemService{
 		log.info("[inicia] PedidoItemApplicationService - deletaPedidoItem");
 		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));
-		Integer qtdePedidoItem = pedidoItem.getQtde(); //Pego a qtde aqui
-		pedidoItemRepository.deletaPedidoItem(pedidoItem); //Deleto pedidoItem aqui
+		Integer qtdePedidoItem = pedidoItem.getQtde(); 
+		pedidoItemRepository.deletaPedidoItem(pedidoItem); 
 		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
-		produto.editaEstoqueSoma(qtdePedidoItem); //Aqui o pedidoItem.getQtde() ainda seria o mesmo?							
+		produto.editaEstoqueSoma(qtdePedidoItem); 							
 		produtoRepository.salvaProduto(produto);
 		log.info("[finaliza] PedidoItemApplicationService - deletaPedidoItem");
 	}
@@ -64,18 +64,23 @@ public class PedidoItemApplicationService implements PedidoItemService{
 		log.info("[inicia] PedidoItemApplicationService - editaPedidoItem");
 		pedidoRepository.buscaPedidoPorId(idPedido);
 		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
-		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
-				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));		
+		PedidoItem pedidoItem = buscaPedidoItemExistente(idPedido, idProduto);		
 		Promocao promocao = promocaoRepository.buscaPromocaoParaEditarPedidoItem(pedidoItemEdita, pedidoItem);
-		pedidoItem.editaPedidoItemExistente(pedidoItemEdita, promocao);
-		pedidoItemRepository.salvaPedidoItem(pedidoItem);
-		if (pedidoItemEdita.getQtde() != null) {
+		if (pedidoItemEdita.getQtde() != null && pedidoItem.getQtde() != pedidoItemEdita.getQtde()) {
 			produto.validaEstoqueEditaPedidoItem(pedidoItemEdita, pedidoItem);
 			produtoRepository.salvaProduto(produto);				
 		}
+		pedidoItem.editaPedidoItemExistente(pedidoItemEdita, promocao);
+		pedidoItemRepository.salvaPedidoItem(pedidoItem);
 		PedidoComItensResponse pedidoComItensResponse = pedidoApplicationService.buscaPedidoComItens(idPedido);
 		log.info("[finaliza] PedidoItemApplicationService - editaPedidoItem");
 		return pedidoComItensResponse;
+	}
+
+	private PedidoItem buscaPedidoItemExistente(Long idPedido, Long idProduto) {
+		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
+				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));
+		return pedidoItem;
 	}
 
 }

@@ -26,7 +26,7 @@ public interface PedidoItemAPI {
 	void deletaPedidoItem(@PathVariable Long idPedido, @PathVariable Long idProduto);
 	
 	@PatchMapping(value = "/edita/idpedido/{idPedido}/idproduto/{idProduto}")
-	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@ResponseStatus(code = HttpStatus.OK)
 	PedidoComItensResponse editaPedidoItem(@PathVariable Long idPedido, @PathVariable Long idProduto,
 			@RequestBody @Valid PedidoItemEditaRequest pedidoItemEdita);
 

@@ -28,4 +28,5 @@ public class PromocaoResponse {
 				.map(PromocaoResponse::new)
 				.collect(Collectors.toList());
 	}
+	
 }

@@ -91,12 +91,14 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 	@Override
 	public void incrementaESalvaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao,
 			PedidoItem pedidoItem, Produto produto) {
+		log.info("[inicia] PedidoItemRepositoryDB - incrementaESalvaPedidoItemExistente");
 		if (pedidoItem != null) {
 			pedidoItem.incrementaPedidoItemExistente(pedidoItemNovo, promocao);
 			salvaPedidoItem(pedidoItem);
 		} else {
 			salvaPedidoItem(new PedidoItem(pedidoItemNovo, produto, promocao));
 		}
+		log.info("[finaliza] PedidoItemRepositoryDB - incrementaESalvaPedidoItemExistente");
 	}
 	
 }
