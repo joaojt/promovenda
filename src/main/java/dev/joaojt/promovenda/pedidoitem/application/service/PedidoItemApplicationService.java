@@ -1,7 +1,5 @@
 package dev.joaojt.promovenda.pedidoitem.application.service;
 
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +7,7 @@ import dev.joaojt.promovenda.handler.APIException;
 import dev.joaojt.promovenda.pedido.application.api.PedidoComItensResponse;
 import dev.joaojt.promovenda.pedido.application.repository.PedidoRepository;
 import dev.joaojt.promovenda.pedido.application.service.PedidoApplicationService;
+import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemEditaRequest;
 import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemNovoRequest;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
@@ -36,19 +35,11 @@ public class PedidoItemApplicationService implements PedidoItemService{
 		pedidoRepository.buscaPedidoPorId(pedidoItemNovo.getIdPedido());
 		Produto produto = produtoRepository.buscaProdutoPorId(pedidoItemNovo.getIdProduto());
 		Promocao promocao = produto.getIdPromocao() != null ? promocaoRepository.buscaPromocaoPorId(produto.getIdPromocao()) : null;
-		if (produto.getEstoque() < pedidoItemNovo.getQtde()) {
-	        throw APIException.build(HttpStatus.BAD_REQUEST, "Estoque insuficiente para o produto: " + produto.getProduto()+".");
-		}
-		Optional<PedidoItem> pedidoItemExistente = pedidoItemRepository
-				.buscaPedidoItemExistente(pedidoItemNovo.getIdPedido(), pedidoItemNovo.getIdProduto());
-		if (pedidoItemExistente.isPresent()) {
-			PedidoItem pedidoItem = pedidoItemExistente.get();
-			pedidoItem.incrementaPedidoItemExistente(pedidoItemNovo, promocao);		
-		    pedidoItemRepository.salvaPedidoItem(pedidoItem);
-		} else {	
-			pedidoItemRepository.salvaPedidoItem(new PedidoItem(pedidoItemNovo, produto, promocao));
-		}		
-		produto.editaEstoqueSubtrai(pedidoItemNovo.getQtde());
+		produto.validaEstoqueInserePedidoItem(pedidoItemNovo);	
+		PedidoItem pedidoItem = pedidoItemRepository
+				.buscaPedidoItemExistente(pedidoItemNovo.getIdPedido(), pedidoItemNovo.getIdProduto()).get();
+		pedidoItemRepository.incrementaESalvaPedidoItemExistente(pedidoItemNovo, promocao, pedidoItem, produto);
+		produto.editaEstoqueSubtrai(pedidoItemNovo);
 		produtoRepository.salvaProduto(produto);		
 		PedidoComItensResponse pedidoComItensResponse = pedidoApplicationService.buscaPedidoComItens(pedidoItemNovo.getIdPedido());
 		log.info("[finaliza] PedidoItemApplicationService - inserePedidoItem");
@@ -60,12 +51,31 @@ public class PedidoItemApplicationService implements PedidoItemService{
 		log.info("[inicia] PedidoItemApplicationService - deletaPedidoItem");
 		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));
-		Integer qtdePedidoItem = pedidoItem.getQtde();
-		pedidoItemRepository.deletaPedidoItem(pedidoItem);
+		Integer qtdePedidoItem = pedidoItem.getQtde(); //Pego a qtde aqui
+		pedidoItemRepository.deletaPedidoItem(pedidoItem); //Deleto pedidoItem aqui
 		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
-		produto.editaEstoqueSoma(qtdePedidoItem);
+		produto.editaEstoqueSoma(qtdePedidoItem); //Aqui o pedidoItem.getQtde() ainda seria o mesmo?							
 		produtoRepository.salvaProduto(produto);
 		log.info("[finaliza] PedidoItemApplicationService - deletaPedidoItem");
+	}
+
+	@Override
+	public PedidoComItensResponse editaPedidoItem(Long idPedido, Long idProduto, PedidoItemEditaRequest pedidoItemEdita) {
+		log.info("[inicia] PedidoItemApplicationService - editaPedidoItem");
+		pedidoRepository.buscaPedidoPorId(idPedido);
+		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
+		PedidoItem pedidoItem = pedidoItemRepository.buscaPedidoItemExistente(idPedido, idProduto)
+				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Item não encontrado."));		
+		Promocao promocao = promocaoRepository.buscaPromocaoParaEditarPedidoItem(pedidoItemEdita, pedidoItem);
+		pedidoItem.editaPedidoItemExistente(pedidoItemEdita, promocao);
+		pedidoItemRepository.salvaPedidoItem(pedidoItem);
+		if (pedidoItemEdita.getQtde() != null) {
+			produto.validaEstoqueEditaPedidoItem(pedidoItemEdita, pedidoItem);
+			produtoRepository.salvaProduto(produto);				
+		}
+		PedidoComItensResponse pedidoComItensResponse = pedidoApplicationService.buscaPedidoComItens(idPedido);
+		log.info("[finaliza] PedidoItemApplicationService - editaPedidoItem");
+		return pedidoComItensResponse;
 	}
 
 }

@@ -28,12 +28,12 @@ public interface PedidoAPI {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaPedido(@PathVariable Long idPedido);
 	
-	@GetMapping(value = "/buscapedidocomitens/{idPedido}")
+	@GetMapping(value = "/busca-pedido-com-itens/{idPedido}")
 	@ResponseStatus(code = HttpStatus.OK)
 	PedidoComItensResponse buscaPedidoComItens(@PathVariable Long idPedido);
 	
-    @GetMapping(value = "/buscapedidosporperiodo")
-    @ResponseStatus(code = HttpStatus.OK)
-    List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(@RequestParam LocalDateTime dataInicial,
-                                                         		@RequestParam LocalDateTime dataFinal);
+	@GetMapping(value = "/busca-pedidos-por-periodo")
+	@ResponseStatus(code = HttpStatus.OK)
+	List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(@RequestParam LocalDateTime dataInicial,
+			@RequestParam LocalDateTime dataFinal);
 }

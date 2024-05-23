@@ -28,11 +28,11 @@ public interface PromocaoAPI {
 	@ResponseStatus(code = HttpStatus.OK)
 	PromocaoResponse buscaPromocaoPorId(@PathVariable Long idPromocao);
 	
-	@GetMapping(value = "/buscatodas")
+	@GetMapping(value = "/busca-todas")
 	@ResponseStatus(code = HttpStatus.OK)
 	List<PromocaoResponse> buscaTodasPromocoes();
 	
-	@PatchMapping(value = "/ativainativa/{idPromocao}")
+	@PatchMapping(value = "/ativa-inativa/{idPromocao}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void ativaInativaPromocao(@PathVariable Long idPromocao,@RequestBody @Valid PromocaoAtivaInativaRequest promocaoAtivaInativa);
 	

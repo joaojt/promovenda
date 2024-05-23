@@ -28,7 +28,7 @@ public interface ProdutoAPI {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaProduto(@PathVariable Long idProduto);
 	
-	@DeleteMapping(value = "/deletatodos")
+	@DeleteMapping(value = "/deleta-todos")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaTodosProdutos();
 	
@@ -36,7 +36,7 @@ public interface ProdutoAPI {
 	@ResponseStatus(code = HttpStatus.OK)
 	ProdutoResponse buscaProdutoPorId(@PathVariable Long idProduto);
 	
-	@GetMapping(value = "/buscatodos")
+	@GetMapping(value = "/busca-todos")
 	@ResponseStatus(code = HttpStatus.OK)
 	List<ProdutoResponse> buscaTodosProdutos();
 	

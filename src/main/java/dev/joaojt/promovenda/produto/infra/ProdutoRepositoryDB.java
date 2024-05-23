@@ -58,13 +58,13 @@ public class ProdutoRepositoryDB implements ProdutoRepository{
 	}
 	
 	@Override
-	public void existeProdutoPorIdPromocao(Long idPromocao) {
-		log.info("[inicia] ProdutoRepositoryDB - existeProdutoPorIdPromocao");
-		produtoRepositoryJpa.findFirstByIdPromocao(idPromocao).ifPresent(produto -> {
-			log.info("[finaliza] ProdutoRepositoryDB - existeProdutoPorIdPromocao");
+	public void buscaSeIdPromocaoExisteNaProduto(Long idPromocao) {
+		log.info("[inicia] ProdutoRepositoryDB - buscaSeIdPromocaoExisteNaProduto");
+		if (produtoRepositoryJpa.findFirstByIdPromocao(idPromocao).isPresent()) {
+			log.info("[finaliza] ProdutoRepositoryDB - buscaSeIdPromocaoExisteNaProduto");
 			throw APIException.build(HttpStatus.BAD_REQUEST,
 					"Existe(m) produto(s) relacionado(s) à esta promoção, por isso não é possível excluí-la ou editá-la.");
-		});
+		}
 	}
 	
 }

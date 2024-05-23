@@ -2,6 +2,7 @@ package dev.joaojt.promovenda.pedidoitem.domain;
 
 import java.util.Optional;
 
+import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemEditaRequest;
 import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemNovoRequest;
 import dev.joaojt.promovenda.produto.domain.Produto;
 import dev.joaojt.promovenda.promocao.domain.Promocao;
@@ -32,9 +33,9 @@ public class PedidoItem {
 	@NotNull(message = "É obrigatório informar o ID do produto (idProduto).")
 	private Long idProduto;
 	private Long idPromocao;
-	private int qtde;
-	private double vlrUnitario;
-	private double vlrTotal;	
+	private Integer qtde;
+	private Double vlrUnitario;
+	private Double vlrTotal;	
 	
 	public PedidoItem(PedidoItemNovoRequest pedidoItemNovo, Produto produto, Promocao promocao) {
 		this.idPedido = pedidoItemNovo.getIdPedido();
@@ -42,10 +43,20 @@ public class PedidoItem {
 		Optional.ofNullable(produto.getIdPromocao()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
 		this.qtde = pedidoItemNovo.getQtde();
 		this.vlrUnitario = produto.getValor();
-		this.vlrTotal = this.idPromocao != null && promocao.isAtiva()
+		this.vlrTotal = promocao != null && promocao.getAtiva()
 				? calculaVlrTotalItemComPromocao(produto.getValor(), promocao.getQtdeCompra(), promocao.getQtdePgto(), pedidoItemNovo.getQtde())
 				: produto.getValor() * pedidoItemNovo.getQtde();
 	}
+
+	public void incrementaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao) {
+		this.qtde += pedidoItemNovo.getQtde();
+		this.vlrUnitario = pedidoItemNovo.getVlrUnitario() != null 
+				? pedidoItemNovo.getVlrUnitario()
+				: this.vlrUnitario;
+		this.vlrTotal = promocao != null && promocao.getAtiva()
+				? calculaVlrTotalItemComPromocao(this.vlrUnitario, promocao.getQtdeCompra(), promocao.getQtdePgto(), this.qtde)
+				: this.vlrUnitario * this.qtde;
+	}	
 
 	private Double calculaVlrTotalItemComPromocao(double valorProduto, int qtdeCompra, int qtdePgto, int qtdeItens) {
 		int qtdePromocao = qtdeItens / qtdeCompra;
@@ -53,10 +64,12 @@ public class PedidoItem {
 		return qtdePromocao * qtdePgto * valorProduto + qtdeRestante * valorProduto;
 	}
 
-	public void incrementaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao) {
-		this.qtde = this.qtde + pedidoItemNovo.getQtde();
-		this.vlrTotal = this.idPromocao != null && promocao.isAtiva()
-				? calculaVlrTotalItemComPromocao(this.vlrUnitario, promocao.getQtdeCompra(), promocao.getQtdePgto(), this.qtde)
+	public void editaPedidoItemExistente(PedidoItemEditaRequest pedidoItemEdita, Promocao promocao) {
+		Optional.ofNullable(promocao.getId()).ifPresent(idPromocao -> this.idPromocao = idPromocao);
+		Optional.ofNullable(pedidoItemEdita.getQtde()).ifPresent(qtde -> this.qtde = qtde);
+		Optional.ofNullable(pedidoItemEdita.getVlrUnitario()).ifPresent(vlrUnitario -> this.vlrUnitario = vlrUnitario);
+		this.vlrTotal = this.idPromocao != null 
+				? calculaVlrTotalItemComPromocao(this.vlrUnitario, promocao.getQtdeCompra(), promocao.getQtdePgto(), this.qtde) 
 				: this.vlrUnitario * this.qtde;
 	}
 

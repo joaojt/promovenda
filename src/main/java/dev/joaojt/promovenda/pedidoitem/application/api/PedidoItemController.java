@@ -17,9 +17,9 @@ public class PedidoItemController implements PedidoItemAPI{
 	@Override
 	public PedidoComItensResponse inserePedidoItem(PedidoItemNovoRequest pedidoItemNovo) {
 		log.info("[inicia] PedidoItemController - inserePedidoItem");
-		PedidoComItensResponse pedidoComItens = pedidoItemService.inserePedidoItem(pedidoItemNovo);
+		PedidoComItensResponse pedidoComItensResponse = pedidoItemService.inserePedidoItem(pedidoItemNovo);
 		log.info("[finaliza] PedidoItemController - inserePedidoItem");
-		return pedidoComItens;
+		return pedidoComItensResponse;
 	}
 
 	@Override
@@ -27,6 +27,14 @@ public class PedidoItemController implements PedidoItemAPI{
 		log.info("[inicia] PedidoItemController - deletaPedidoItem");
 		pedidoItemService.deletaPedidoItem(idPedido, idProduto);
 		log.info("[finaliza] PedidoItemController - deletaPedidoItem");
+	}
+
+	@Override
+	public PedidoComItensResponse editaPedidoItem(Long idPedido, Long idProduto, PedidoItemEditaRequest pedidoItemEdita) {
+		log.info("[inicia] PedidoItemController - editaPedidoItem");
+		PedidoComItensResponse pedidoComItensResponse = pedidoItemService.editaPedidoItem(idPedido, idProduto, pedidoItemEdita);
+		log.info("[finaliza] PedidoItemController - editaPedidoItem");
+		return pedidoComItensResponse;
 	}
 
 }

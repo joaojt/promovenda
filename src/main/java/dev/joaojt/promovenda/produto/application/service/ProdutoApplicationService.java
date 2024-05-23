@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.produto.application.api.ProdutoEditaRequest;
 import dev.joaojt.promovenda.produto.application.api.ProdutoNovoRequest;
 import dev.joaojt.promovenda.produto.application.api.ProdutoResponse;
@@ -18,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 public class ProdutoApplicationService implements ProdutoService{
 	
 	private final ProdutoRepository produtoRepository;
+	private final PedidoItemRepository pedidoItemRepository;
 	
 	@Override
 	public ProdutoResponse insereProduto(ProdutoNovoRequest produtoNovo) {
@@ -39,6 +41,7 @@ public class ProdutoApplicationService implements ProdutoService{
 	public void deletaProduto(Long idProduto) {
 		log.info("[inicia] ProdutoApplicationService - deletaProduto");
 		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
+		pedidoItemRepository.buscaSeProdutoExisteNaPedidoItem(idProduto);
 		produtoRepository.deletaProduto(produto);
 		log.info("[finaliza] ProdutoApplicationService - deletaProduto");
 	}

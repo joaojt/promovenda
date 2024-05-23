@@ -16,6 +16,6 @@ public interface ProdutoRepository {
 
 	void deletaTodosProdutos();
 
-	void existeProdutoPorIdPromocao(Long idPromocao);
+	void buscaSeIdPromocaoExisteNaProduto(Long idPromocao);
 	
 }

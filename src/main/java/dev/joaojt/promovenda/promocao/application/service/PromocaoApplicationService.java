@@ -61,8 +61,8 @@ public class PromocaoApplicationService implements PromocaoService{
 	public void deletaPromocao(Long idPromocao) {
 		log.info("[inicia] PromocaoApplicationService - deletaPromocao");
 	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
-		produtoRepository.existeProdutoPorIdPromocao(idPromocao);
-		pedidoItemRepository.existePedidoItemPorIdPromocao(idPromocao);
+	 	pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(idPromocao);
+		produtoRepository.buscaSeIdPromocaoExisteNaProduto(idPromocao);
 		promocaoRepository.deletaPromocao(promocao);
 		log.info("[finaliza] PromocaoApplicationService - deletaPromocao");
 	}
@@ -71,11 +71,10 @@ public class PromocaoApplicationService implements PromocaoService{
 	public void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita) {
 		log.info("[inicia] PromocaoApplicationService - editaPromocao");
 	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
-		pedidoItemRepository.existePedidoItemPorIdPromocao(idPromocao);		
+		pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(idPromocao);		
 		promocao.editaPromocao(promocaoEdita);
 		promocaoRepository.salvaPromocao(promocao);
-		log.info("[finaliza] PromocaoApplicationService - editaPromocao");
-		
+		log.info("[finaliza] PromocaoApplicationService - editaPromocao");	
 	}	
 	
 }

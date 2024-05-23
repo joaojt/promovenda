@@ -11,16 +11,16 @@ public class PromocaoResponse {
 	
 	private final Long id;
 	private final String promocao;
-	private final int qtdeCompra;
-	private final int qtdePgto;
-	private final boolean ativa;
+	private final Integer qtdeCompra;
+	private final Integer qtdePgto;
+	private final Boolean ativa;
 	
 	public PromocaoResponse(Promocao promocao) {
 		this.id = promocao.getId();
 		this.promocao = promocao.getPromocao();
 		this.qtdeCompra = promocao.getQtdeCompra();
 		this.qtdePgto = promocao.getQtdePgto();
-		this.ativa = promocao.isAtiva();
+		this.ativa = promocao.getAtiva();
 	}
 
 	public static List<PromocaoResponse> converter(List<Promocao> promocoes) {

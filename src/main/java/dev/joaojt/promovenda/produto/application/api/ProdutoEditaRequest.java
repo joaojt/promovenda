@@ -11,7 +11,7 @@ public class ProdutoEditaRequest {
     @Size(message = "A descrição do produto deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
     private String produto;
     private Long idPromocao;
-    private double valor;
-    private int estoque;
+    private Double valor;
+    private Integer estoque;
 
 }

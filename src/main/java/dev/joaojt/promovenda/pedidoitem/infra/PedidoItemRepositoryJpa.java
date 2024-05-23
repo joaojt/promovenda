@@ -14,5 +14,7 @@ public interface PedidoItemRepositoryJpa extends JpaRepository<PedidoItem, Long>
 	Optional<PedidoItem> findByIdPedidoAndIdProduto(Long idPedido, Long idProduto);
 
 	Optional<PedidoItem> findFirstByIdPromocao(Long idPromocao);
+
+	Optional<PedidoItem> findFirstByIdProduto(Long idProduto);
 	
 }

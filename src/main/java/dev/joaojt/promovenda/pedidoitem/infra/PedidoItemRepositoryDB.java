@@ -7,8 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import dev.joaojt.promovenda.handler.APIException;
+import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemNovoRequest;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
+import dev.joaojt.promovenda.produto.domain.Produto;
+import dev.joaojt.promovenda.promocao.domain.Promocao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -66,13 +69,34 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 	}
 
 	@Override
-	public void existePedidoItemPorIdPromocao(Long idPromocao) {
-		log.info("[inicia] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
-		pedidoItemRepositoryJpa.findFirstByIdPromocao(idPromocao).ifPresent(pedidoItem -> {
-			log.info("[finaliza] PedidoItemRepositoryDB - existePedidoItemPorIdPromocao");
+	public void buscaSeIdPromocaoExisteNaPedidoItem(Long idPromocao) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaSeIdPromocaoExisteNaPedidoItem");
+		if (pedidoItemRepositoryJpa.findFirstByIdPromocao(idPromocao).isPresent()) {
+			log.info("[finaliza] PedidoItemRepositoryDB - buscaSeIdPromocaoExisteNaPedidoItem");
 			throw APIException.build(HttpStatus.BAD_REQUEST,
 					"Existe(m) item(s) de pedido(s) relacionado(s) à esta promoção, por isso não é possível excluí-la ou editá-la.");
-		});
+		};
+	}
+
+	@Override
+	public void buscaSeProdutoExisteNaPedidoItem(Long idProduto) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaSeProdutoExisteNaPedidoItem");
+		if (pedidoItemRepositoryJpa.findFirstByIdProduto(idProduto).isPresent()) {
+			log.info("[finaliza] PedidoItemRepositoryDB - buscaSeProdutoExisteNaPedidoItem");
+			throw APIException.build(HttpStatus.BAD_REQUEST,
+					"Existe(m) item(s) de pedido(s) relacionado(s) à este produto, por isso não é possível excluí-lo.");
+		}
+	}
+
+	@Override
+	public void incrementaESalvaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao,
+			PedidoItem pedidoItem, Produto produto) {
+		if (pedidoItem != null) {
+			pedidoItem.incrementaPedidoItemExistente(pedidoItemNovo, promocao);
+			salvaPedidoItem(pedidoItem);
+		} else {
+			salvaPedidoItem(new PedidoItem(pedidoItemNovo, produto, promocao));
+		}
 	}
 	
 }
