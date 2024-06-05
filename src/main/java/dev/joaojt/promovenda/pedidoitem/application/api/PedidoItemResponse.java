@@ -9,22 +9,24 @@ import lombok.Getter;
 @Getter
 public class PedidoItemResponse {
 	
-	private final Long id;
-	private final Long idPedido;
-	private final Long idProduto;
-	private final Long idPromocao;
-	private final Integer qtde;
-	private final Double vlrUnitario;
-	private final Double vlrTotal;
+	private Long id;
+	private Long pedidoId;
+	private Long produtoId;
+	private Long promocaoId;
+	private Integer qtde;
+	private Double vlrUnitario;
+	private Double vlrTotal;
+	private String descPromocao;
 	
 	public PedidoItemResponse (PedidoItem pedidoItem) {
 		this.id = pedidoItem.getId();
-		this.idPedido = pedidoItem.getIdPedido();
-		this.idProduto = pedidoItem.getIdProduto();
-		this.idPromocao = pedidoItem.getIdPromocao();		
+		this.pedidoId = pedidoItem.getPedido().getId();
+		this.produtoId = pedidoItem.getProduto().getId();
+		this.promocaoId = pedidoItem.getPromocao().getId();		
 		this.qtde = pedidoItem.getQtde();
 		this.vlrUnitario = pedidoItem.getVlrUnitario();
 		this.vlrTotal = pedidoItem.getVlrTotal();
+		this.descPromocao = pedidoItem.getPromocao() != null ? pedidoItem.getPromocao().getDescPromocao() : null;
 	}
 	
 	public static List<PedidoItemResponse> converter(List<PedidoItem> pedidoItens) {

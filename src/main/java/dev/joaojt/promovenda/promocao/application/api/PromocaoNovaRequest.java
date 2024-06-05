@@ -13,7 +13,7 @@ public class PromocaoNovaRequest {
 	
     @Size(message = "A descrição da promoção deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
     @NotBlank(message = "A descrição da promoção não pode ser nula ou vazia.")
-	private String promocao;
+	private String descPromocao;
     @NotNull(message = "A quantidade de compra não pode ser nula.")
     @Positive(message = "A quantidade de compra deve ser maior que zero.")
     private Integer qtdeCompra;

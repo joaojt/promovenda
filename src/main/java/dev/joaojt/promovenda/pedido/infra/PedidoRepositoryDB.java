@@ -35,9 +35,9 @@ public class PedidoRepositoryDB implements PedidoRepository{
 	}
 
 	@Override
-	public Pedido buscaPedidoPorId(Long idPedido) {
+	public Pedido buscaPedidoPorId(Long pedidoId) {
 		log.info("[inicia] PedidoRepositoryDB - buscaPedidoPorId");
-		Pedido pedido = pedidoRepositoryJpa.findById(idPedido)
+		Pedido pedido = pedidoRepositoryJpa.findById(pedidoId)
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Pedido não encontrado."));
 		log.info("[finaliza] PedidoRepositoryDB - buscaPedidoPorId");
 		return pedido;
@@ -49,6 +49,14 @@ public class PedidoRepositoryDB implements PedidoRepository{
         List<Pedido> pedidos = pedidoRepositoryJpa.findPedidosByPeriodo(dataInicial, dataFinal);
         log.info("[finaliza] PedidoRepositoryDB - buscaPedidosComItensPorPeriodo");
         return pedidos;
+	}
+
+	@Override
+	public Pedido buscaPedidoAberto() {
+		log.info("[inicia] PedidoRepositoryDB - buscaPedidoAberto");
+		Pedido pedido = pedidoRepositoryJpa.findByAberto(true);
+		log.info("[finaliza] PedidoRepositoryDB - buscaPedidoAberto");
+		return pedido;
 	}
 
 }

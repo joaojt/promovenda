@@ -8,6 +8,6 @@ import dev.joaojt.promovenda.produto.domain.Produto;
 
 public interface ProdutoRepositoryJpa extends JpaRepository<Produto, Long>{
 
-	Optional<Produto> findFirstByIdPromocao(Long idPromocao);
+	Optional<Produto> findFirstByPromocaoId(Long promocaoId);
 
 }

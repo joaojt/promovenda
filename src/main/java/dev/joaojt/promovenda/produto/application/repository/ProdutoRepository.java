@@ -8,7 +8,7 @@ public interface ProdutoRepository {
 	
 	Produto salvaProduto(Produto produto);
 
-	Produto buscaProdutoPorId(Long idProduto);
+	Produto buscaProdutoPorId(Long produtoId);
 
 	void deletaProduto(Produto produto);
 
@@ -16,6 +16,6 @@ public interface ProdutoRepository {
 
 	void deletaTodosProdutos();
 
-	void buscaSeIdPromocaoExisteNaProduto(Long idPromocao);
+	void buscaSeIdPromocaoExisteNaProduto(Long promocaoId);
 	
 }

@@ -8,8 +8,8 @@ public interface PedidoItemService {
 
 	PedidoComItensResponse inserePedidoItem(PedidoItemNovoRequest pedidoItemNovo);
 
-	void deletaPedidoItem(Long idPedido, Long idProduto);
+	void deletaPedidoItem(Long pedidoId, Long produtoId);
 
-	PedidoComItensResponse editaPedidoItem(Long idPedido, Long idProduto, PedidoItemEditaRequest pedidoItemEdita);
+	PedidoComItensResponse editaPedidoItem(Long pedidoId, Long produtoId, PedidoItemEditaRequest pedidoItemEdita);
 
 }

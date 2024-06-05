@@ -24,13 +24,13 @@ public interface PedidoAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	PedidoResponse inserePedido(@RequestBody @Valid PedidoNovoRequest pedidoNovo);
 
-	@DeleteMapping(value = "/deleta/{idPedido}")
+	@DeleteMapping(value = "/deleta/{pedidoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void deletaPedido(@PathVariable Long idPedido);
+	void deletaPedido(@PathVariable Long pedidoId);
 	
-	@GetMapping(value = "/busca-pedido-com-itens/{idPedido}")
+	@GetMapping(value = "/busca-pedido-com-itens/{pedidoId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	PedidoComItensResponse buscaPedidoComItens(@PathVariable Long idPedido);
+	PedidoComItensResponse buscaPedidoComItens(@PathVariable Long pedidoId);
 	
 	@GetMapping(value = "/busca-pedidos-por-periodo")
 	@ResponseStatus(code = HttpStatus.OK)

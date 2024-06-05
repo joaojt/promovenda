@@ -4,21 +4,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dev.joaojt.promovenda.produto.domain.Produto;
+import dev.joaojt.promovenda.promocao.domain.Promocao;
 import lombok.Getter;
 
 @Getter
 public class ProdutoResponse {
 	
-	private final Long id;
-	private final String produto;
-	private final Long idPromocao;
-	private final Double valor;
-	private final Integer estoque;
+	private Long id;
+	private String descProduto;
+	private Promocao promocao;
+	private Double valor;
+	private Integer estoque;
 	
 	public ProdutoResponse(Produto produto) {
 		this.id = produto.getId();
-		this.produto = produto.getProduto();
-		this.idPromocao = produto.getIdPromocao();
+		this.descProduto = produto.getDescProduto();
+		this.promocao = produto.getPromocao();
 		this.valor = produto.getValor();
 		this.estoque = produto.getEstoque();
 	}

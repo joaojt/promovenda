@@ -23,16 +23,16 @@ public class PedidoItemController implements PedidoItemAPI{
 	}
 
 	@Override
-	public void deletaPedidoItem(Long idPedido, Long idProduto) {
+	public void deletaPedidoItem(Long pedidoId, Long produtoId) {
 		log.info("[inicia] PedidoItemController - deletaPedidoItem");
-		pedidoItemService.deletaPedidoItem(idPedido, idProduto);
+		pedidoItemService.deletaPedidoItem(pedidoId, produtoId);
 		log.info("[finaliza] PedidoItemController - deletaPedidoItem");
 	}
 
 	@Override
-	public PedidoComItensResponse editaPedidoItem(Long idPedido, Long idProduto, PedidoItemEditaRequest pedidoItemEdita) {
+	public PedidoComItensResponse editaPedidoItem(Long pedidoId, Long produtoId, PedidoItemEditaRequest pedidoItemEdita) {
 		log.info("[inicia] PedidoItemController - editaPedidoItem");
-		PedidoComItensResponse pedidoComItensResponse = pedidoItemService.editaPedidoItem(idPedido, idProduto, pedidoItemEdita);
+		PedidoComItensResponse pedidoComItensResponse = pedidoItemService.editaPedidoItem(pedidoId, produtoId, pedidoItemEdita);
 		log.info("[finaliza] PedidoItemController - editaPedidoItem");
 		return pedidoComItensResponse;
 	}

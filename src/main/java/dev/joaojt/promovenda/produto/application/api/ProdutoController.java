@@ -24,9 +24,9 @@ public class ProdutoController implements ProdutoAPI{
 	}
     
 	@Override
-	public void deletaProduto(Long idProduto) {
+	public void deletaProduto(Long produtoId) {
 		log.info("[inicia] ProdutoController - deletaProduto");
-		produtoService.deletaProduto(idProduto);
+		produtoService.deletaProduto(produtoId);
 		log.info("[finaliza] ProdutoController - deletaProduto");
 	}
 	
@@ -38,18 +38,17 @@ public class ProdutoController implements ProdutoAPI{
 	}	
 
 	@Override
-	public ProdutoResponse buscaProdutoPorId(Long idProduto) {
+	public ProdutoResponse buscaProdutoPorId(Long produtoId) {
 		log.info("[inicia] ProdutoController - buscaProdutoPorId");
-		log.info("[idProduto] {}", idProduto);
-		ProdutoResponse produtoResponse = produtoService.buscaProdutoPorId(idProduto);
+		ProdutoResponse produtoResponse = produtoService.buscaProdutoPorId(produtoId);
 		log.info("[finaliza] ProdutoController - buscaProdutoPorId");
 		return produtoResponse;
 	}
 
 	@Override
-	public void editaProduto(Long idProduto, ProdutoEditaRequest produtoEdita) {
+	public void editaProduto(Long produtoId, ProdutoEditaRequest produtoEdita) {
 		log.info("[inicia] ProdutoController - editaProduto");
-		produtoService.editaProduto(idProduto, produtoEdita);
+		produtoService.editaProduto(produtoId, produtoEdita);
 		log.info("[finaliza] ProdutoController - editaProduto");			
 	}
 

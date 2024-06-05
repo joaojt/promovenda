@@ -11,8 +11,10 @@ public interface PedidoRepository {
 
 	void deletaPedido(Pedido pedido);
 
-	Pedido buscaPedidoPorId(Long idPedido);
+	Pedido buscaPedidoPorId(Long pedidoId);
 
 	List<Pedido> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal);
+
+	Pedido buscaPedidoAberto();
 
 }

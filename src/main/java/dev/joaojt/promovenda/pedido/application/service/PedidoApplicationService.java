@@ -14,7 +14,6 @@ import dev.joaojt.promovenda.pedido.application.repository.PedidoRepository;
 import dev.joaojt.promovenda.pedido.domain.Pedido;
 import dev.joaojt.promovenda.pedidoitem.application.repository.PedidoItemRepository;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
-import dev.joaojt.promovenda.promocao.application.repository.PromocaoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -25,7 +24,6 @@ public class PedidoApplicationService implements PedidoService{
 	
 	private final PedidoRepository pedidoRepository;
 	private final PedidoItemRepository pedidoItemRepository;
-	private final PromocaoRepository promocaoRepository;
 	
 	@Override
 	public PedidoResponse inserePedido(PedidoNovoRequest pedidoNovo) {
@@ -36,10 +34,10 @@ public class PedidoApplicationService implements PedidoService{
 	}
 
 	@Override
-	public void deletaPedido(Long idPedido) {
+	public void deletaPedido(Long pedidoId) {
 		log.info("[inicia] PedidoApplicationService - deletaPedido");
-		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
-		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);
+		Pedido pedido = pedidoRepository.buscaPedidoPorId(pedidoId);
+		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedidoId);
 		Optional.ofNullable(pedidoItens).filter(itens -> !itens.isEmpty())
 				.ifPresent(pedidoItemRepository::deletaPedidoItens);
 		pedidoRepository.deletaPedido(pedido);
@@ -47,22 +45,20 @@ public class PedidoApplicationService implements PedidoService{
 	}
 
 	@Override
-	public PedidoComItensResponse buscaPedidoComItens(Long idPedido) {
+	public PedidoComItensResponse buscaPedidoComItens(Long pedidoId) {
 		log.info("[inicia] PedidoApplicationService - buscaPedidoComItens");
-		Pedido pedido = pedidoRepository.buscaPedidoPorId(idPedido);
-		List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(idPedido);
-		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido, pedidoItens, promocaoRepository);
+		Pedido pedido = pedidoRepository.buscaPedidoPorId(pedidoId);
+		PedidoComItensResponse pedidoComItensResponse = new PedidoComItensResponse(pedido);
 		log.info("[finaliza] PedidoApplicationService - buscaPedidoComItens");	
 		return pedidoComItensResponse;		
 	}
 	
-	public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial,LocalDateTime dataFinal) {
+	@Override
+	public List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal) {
 		log.info("[inicia] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
 		List<Pedido> pedidos = pedidoRepository.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
 		log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
-		return pedidos.stream().map(pedido -> {
-			List<PedidoItem> pedidoItens = pedidoItemRepository.buscaPedidoItens(pedido.getId());
-			return new PedidoComItensResponse(pedido, pedidoItens, promocaoRepository);
+		return pedidos.stream().map(pedido -> {return new PedidoComItensResponse(pedido);
 		}).collect(Collectors.toList());
 	}
 	

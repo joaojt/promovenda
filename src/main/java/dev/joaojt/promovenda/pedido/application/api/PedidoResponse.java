@@ -13,6 +13,7 @@ public class PedidoResponse {
 	private final Long id;
 	private final String cliente;
     private final String data;
+    private Boolean aberto;
 
 	public PedidoResponse(Pedido pedido) {
 		this.id = pedido.getId();

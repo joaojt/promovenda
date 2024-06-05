@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class PromocaoEditaRequest {
 
     @Size(message = "A descrição da promoção deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
-	private String promocao;
+	private String descPromocao;
     @Positive(message = "A quantidade de compra deve ser maior que zero.")
     private Integer qtdeCompra;
     @Positive(message = "A quantidade de pagamento deve ser maior que zero.")

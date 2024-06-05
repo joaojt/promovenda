@@ -10,6 +10,8 @@ import dev.joaojt.promovenda.produto.application.api.ProdutoNovoRequest;
 import dev.joaojt.promovenda.produto.application.api.ProdutoResponse;
 import dev.joaojt.promovenda.produto.application.repository.ProdutoRepository;
 import dev.joaojt.promovenda.produto.domain.Produto;
+import dev.joaojt.promovenda.promocao.application.repository.PromocaoRepository;
+import dev.joaojt.promovenda.promocao.domain.Promocao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -20,28 +22,33 @@ public class ProdutoApplicationService implements ProdutoService{
 	
 	private final ProdutoRepository produtoRepository;
 	private final PedidoItemRepository pedidoItemRepository;
+	private final PromocaoRepository promocaoRepository;
 	
 	@Override
 	public ProdutoResponse insereProduto(ProdutoNovoRequest produtoNovo) {
-		log.info("[inicia] ProdutoApplicationService - insereProduto");
-		Produto produto = produtoRepository.salvaProduto(new Produto(produtoNovo));
+		log.info("[inicia] ProdutoApplicationService - insereProduto");		     
+		Promocao promocao = produtoNovo.getPromocaoId() != null
+				? promocaoRepository.buscaPromocaoPorId(produtoNovo.getPromocaoId())
+				: null;
+        Produto produto = new Produto(produtoNovo, promocao);
+		produtoRepository.salvaProduto(produto);
 		log.info("[finaliza] ProdutoApplicationService - insereProduto");
 		return new ProdutoResponse(produto);
 	}
 
 	@Override
-	public ProdutoResponse buscaProdutoPorId(Long idProduto) {
+	public ProdutoResponse buscaProdutoPorId(Long produtoId) {
 		log.info("[inicia] ProdutoApplicationService - buscaProdutoPorId");
-		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
+		Produto produto = produtoRepository.buscaProdutoPorId(produtoId);
 		log.info("[finaliza] ProdutoApplicationService - buscaProdutoPorId");
 		return new ProdutoResponse(produto);
 	}
 
 	@Override
-	public void deletaProduto(Long idProduto) {
+	public void deletaProduto(Long produtoId) {
 		log.info("[inicia] ProdutoApplicationService - deletaProduto");
-		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
-		pedidoItemRepository.buscaSeProdutoExisteNaPedidoItem(idProduto);
+		Produto produto = produtoRepository.buscaProdutoPorId(produtoId);
+		pedidoItemRepository.buscaSeProdutoExisteNaPedidoItem(produtoId);
 		produtoRepository.deletaProduto(produto);
 		log.info("[finaliza] ProdutoApplicationService - deletaProduto");
 	}
@@ -49,15 +56,22 @@ public class ProdutoApplicationService implements ProdutoService{
 	@Override
 	public void deletaTodosProdutos() {
 		log.info("[finaliza] ProdutoApplicationService - deletaTodosProdutos");
+		List<Produto> produtos = produtoRepository.buscaTodosProdutos();
+	    for (Produto produto : produtos) {
+	    	pedidoItemRepository.buscaSeProdutoExisteNaPedidoItem(produto.getId());
+	    }		
 		produtoRepository.deletaTodosProdutos();
 		log.info("[finaliza] ProdutoApplicationService - deletaTodosProdutos");
 	}	
 
 	@Override
-	public void editaProduto(Long idProduto, ProdutoEditaRequest produtoEdita) {
+	public void editaProduto(Long produtoId, ProdutoEditaRequest produtoEdita) {
 		log.info("[inicia] ProdutoApplicationService - editaProduto");
-		Produto produto = produtoRepository.buscaProdutoPorId(idProduto);
-		produto.editaProduto(produtoEdita);
+		Produto produto = produtoRepository.buscaProdutoPorId(produtoId);
+		Promocao promocao = produtoEdita.getPromocaoId() != null 
+				? promocaoRepository.buscaPromocaoPorId(produtoEdita.getPromocaoId())
+				: null;
+		produto.editaProduto(produtoEdita, promocao);
 		produtoRepository.salvaProduto(produto);
 		log.info("[finaliza] ProdutoApplicationService - editaProduto");
 	}

@@ -9,12 +9,12 @@ import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
 
 public interface PedidoItemRepositoryJpa extends JpaRepository<PedidoItem, Long>{
 
-	List<PedidoItem> findAllByIdPedidoOrderByIdAsc(Long idPedido);
+	List<PedidoItem> findAllByPedidoIdOrderByIdAsc(Long pedidoId);
 
-	Optional<PedidoItem> findByIdPedidoAndIdProduto(Long idPedido, Long idProduto);
+	Optional<PedidoItem> findByPedidoIdAndProdutoId(Long pedidoId, Long produtoId);
 
-	Optional<PedidoItem> findFirstByIdPromocao(Long idPromocao);
+	Optional<PedidoItem> findFirstByPromocaoId(Long promocaoId);
 
-	Optional<PedidoItem> findFirstByIdProduto(Long idProduto);
+	Optional<PedidoItem> findFirstByProdutoId(Long produtoId);
 	
 }

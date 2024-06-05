@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PedidoItemEditaRequest {
 
-	private Long idProduto;
-	private Long idPromocao;
 	@Positive(message = "A quantidade deve ser maior que zero.")
 	private Integer qtde;
 	@PositiveOrZero(message = "O valor unitário deve ser igual ou maior que zero.")

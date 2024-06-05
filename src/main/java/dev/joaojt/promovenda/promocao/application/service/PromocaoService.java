@@ -11,14 +11,14 @@ public interface PromocaoService {
 
 	PromocaoResponse inserePromocao(PromocaoNovaRequest promocaoNova);
 
-	PromocaoResponse buscaPromocaoPorId(Long idPromocao);
+	PromocaoResponse buscaPromocaoPorId(Long promocaoId);
 
-	void ativaInativaPromocao(Long idPromocao, PromocaoAtivaInativaRequest promocaoAtivaInativa);
+	void ativaInativaPromocao(Long promocaoId, PromocaoAtivaInativaRequest promocaoAtivaInativa);
 
 	List<PromocaoResponse> buscaTodasPromocoes();
 
-	void deletaPromocao(Long idPromocao);
+	void deletaPromocao(Long promocaoId);
 
-	void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita);
+	void editaPromocao(Long promocaoId, PromocaoEditaRequest promocaoEdita);
 
 }

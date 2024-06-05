@@ -33,17 +33,17 @@ public class PromocaoApplicationService implements PromocaoService{
 	}
 
 	@Override
-	public PromocaoResponse buscaPromocaoPorId(Long idPromocao) {
+	public PromocaoResponse buscaPromocaoPorId(Long promocaoId) {
 		log.info("[inicia] PromocaoApplicationService - buscaPromocaoPorId");
-		Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
+		Promocao promocao = promocaoRepository.buscaPromocaoPorId(promocaoId);
 		log.info("[finaliza] PromocaoApplicationService - buscaPromocaoPorId");
 		return new PromocaoResponse(promocao);
 	}
 
 	@Override
-	public void ativaInativaPromocao(Long idPromocao, PromocaoAtivaInativaRequest promocaoAtivaInativa) {
+	public void ativaInativaPromocao(Long promocaoId, PromocaoAtivaInativaRequest promocaoAtivaInativa) {
 		log.info("[inicia] PromocaoApplicationService - ativaInativaPromocao");
-		Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
+		Promocao promocao = promocaoRepository.buscaPromocaoPorId(promocaoId);
 		promocao.ativaInativaPromocao(promocaoAtivaInativa);
 		promocaoRepository.salvaPromocao(promocao);
 		log.info("[finaliza] PromocaoApplicationService - ativaInativaPromocao");
@@ -57,21 +57,23 @@ public class PromocaoApplicationService implements PromocaoService{
 		return PromocaoResponse.converter(promocoes);
 	}
 
+	//Validar os dois metodos abaixo:
+	
 	@Override
-	public void deletaPromocao(Long idPromocao) {
+	public void deletaPromocao(Long promocaoId) {
 		log.info("[inicia] PromocaoApplicationService - deletaPromocao");
-	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
-	 	pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(idPromocao);
-		produtoRepository.buscaSeIdPromocaoExisteNaProduto(idPromocao);
+	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(promocaoId);
+	 	pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(promocaoId);
+		produtoRepository.buscaSeIdPromocaoExisteNaProduto(promocaoId);
 		promocaoRepository.deletaPromocao(promocao);
 		log.info("[finaliza] PromocaoApplicationService - deletaPromocao");
 	}
 
 	@Override
-	public void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita) {
+	public void editaPromocao(Long promocaoId, PromocaoEditaRequest promocaoEdita) {
 		log.info("[inicia] PromocaoApplicationService - editaPromocao");
-	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(idPromocao);
-		pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(idPromocao);		
+	 	Promocao promocao = promocaoRepository.buscaPromocaoPorId(promocaoId);
+		pedidoItemRepository.buscaSeIdPromocaoExisteNaPedidoItem(promocaoId);		
 		promocao.editaPromocao(promocaoEdita);
 		promocaoRepository.salvaPromocao(promocao);
 		log.info("[finaliza] PromocaoApplicationService - editaPromocao");	

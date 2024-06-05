@@ -1,32 +1,23 @@
 package dev.joaojt.promovenda.pedidoitem.application.repository;
 
 import java.util.List;
-import java.util.Optional;
 
-import dev.joaojt.promovenda.pedidoitem.application.api.PedidoItemNovoRequest;
 import dev.joaojt.promovenda.pedidoitem.domain.PedidoItem;
-import dev.joaojt.promovenda.produto.domain.Produto;
-import dev.joaojt.promovenda.promocao.domain.Promocao;
 
 public interface PedidoItemRepository {
 
-	List<PedidoItem> buscaPedidoItens(Long idPedido);
+	List<PedidoItem> buscaPedidoItens(Long pedidoId);
 
 	void deletaPedidoItens(List<PedidoItem> pedidoItens);
 
 	PedidoItem salvaPedidoItem(PedidoItem pedidoItem);
 
-	Boolean buscaSePedidoItemJaExiste(Long idPedido, Long idProduto);
-
-	Optional<PedidoItem> buscaPedidoItemExistente(Long idPedido, Long idProduto);
+	PedidoItem buscaPedidoItem(Long pedidoId, Long produtoId);
 
 	void deletaPedidoItem(PedidoItem pedidoItem);
 
-	void buscaSeProdutoExisteNaPedidoItem(Long idProduto);
+	void buscaSeProdutoExisteNaPedidoItem(Long produtoId);
 
-	void buscaSeIdPromocaoExisteNaPedidoItem(Long idPromocao);
-
-	void incrementaESalvaPedidoItemExistente(PedidoItemNovoRequest pedidoItemNovo, Promocao promocao,
-			PedidoItem pedidoItem, Produto produto);
+	void buscaSeIdPromocaoExisteNaPedidoItem(Long promocaoId);
 
 }

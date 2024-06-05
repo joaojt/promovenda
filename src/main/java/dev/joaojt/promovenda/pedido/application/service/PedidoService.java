@@ -11,9 +11,9 @@ public interface PedidoService {
 
 	PedidoResponse inserePedido(PedidoNovoRequest pedidoNovo);
 
-	void deletaPedido(Long idPedido);
+	void deletaPedido(Long pedidoId);
 
-	PedidoComItensResponse buscaPedidoComItens(Long idPedido);
+	PedidoComItensResponse buscaPedidoComItens(Long pedidoId);
 	
 	List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal);
 

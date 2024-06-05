@@ -32,7 +32,7 @@ public class Promocao {
 	private Long id;
     @Size(message = "A descrição da promoção deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
     @NotBlank(message = "A descrição da promoção não pode ser nula ou vazia.")
-	private String promocao;
+	private String descPromocao;
     @NotNull(message = "A quantidade de compra não pode ser nula.")
     @Positive(message = "A quantidade de compra deve ser maior que zero.")
     private Integer qtdeCompra;
@@ -46,14 +46,14 @@ public class Promocao {
 	}
 
 	public Promocao(PromocaoNovaRequest promocaoNova) {
-		this.promocao = promocaoNova.getPromocao();
+		this.descPromocao = promocaoNova.getDescPromocao();
 		this.qtdeCompra = promocaoNova.getQtdeCompra();
 		this.qtdePgto = promocaoNova.getQtdePgto();
 		this.ativa = promocaoNova.getAtiva();
 	}
 
 	public void editaPromocao(PromocaoEditaRequest promocaoEdita) {
-		Optional.ofNullable(promocaoEdita.getPromocao()).ifPresent(promocao -> this.promocao = promocao);
+		Optional.ofNullable(promocaoEdita.getDescPromocao()).ifPresent(descPromocao -> this.descPromocao = descPromocao);
 		Optional.ofNullable(promocaoEdita.getQtdeCompra()).ifPresent(qtdeCompra -> this.qtdeCompra = qtdeCompra);
 		Optional.ofNullable(promocaoEdita.getQtdePgto()).ifPresent(qtdePgto -> this.qtdePgto = qtdePgto);
 		Optional.ofNullable(promocaoEdita.getAtiva()).ifPresent(ativa -> this.ativa = ativa);

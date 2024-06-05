@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 public class ProdutoEditaRequest {
 	
     @Size(message = "A descrição do produto deve ter entre 5 e 50 caracteres.", min = 5, max = 50)
-    private String produto;
-    private Long idPromocao;
+    private String descProduto;
+    private Long promocaoId;
     private Double valor;
     private Integer estoque;
 

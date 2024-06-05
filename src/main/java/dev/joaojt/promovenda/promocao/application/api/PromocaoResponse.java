@@ -9,15 +9,15 @@ import lombok.Getter;
 @Getter
 public class PromocaoResponse {
 	
-	private final Long id;
-	private final String promocao;
-	private final Integer qtdeCompra;
-	private final Integer qtdePgto;
-	private final Boolean ativa;
+	private Long id;
+	private String descPromocao;
+	private Integer qtdeCompra;
+	private Integer qtdePgto;
+	private Boolean ativa;
 	
 	public PromocaoResponse(Promocao promocao) {
 		this.id = promocao.getId();
-		this.promocao = promocao.getPromocao();
+		this.descPromocao = promocao.getDescPromocao();
 		this.qtdeCompra = promocao.getQtdeCompra();
 		this.qtdePgto = promocao.getQtdePgto();
 		this.ativa = promocao.getAtiva();

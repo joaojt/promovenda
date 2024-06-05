@@ -24,24 +24,24 @@ public interface ProdutoAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	ProdutoResponse insereProduto(@RequestBody @Valid ProdutoNovoRequest produtoNovo);
 	
-	@DeleteMapping(value = "/deleta/{idProduto}")
+	@DeleteMapping(value = "/deleta/{produtoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void deletaProduto(@PathVariable Long idProduto);
+	void deletaProduto(@PathVariable Long produtoId);
 	
 	@DeleteMapping(value = "/deleta-todos")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	void deletaTodosProdutos();
 	
-	@GetMapping(value = "/busca/{idProduto}")
+	@GetMapping(value = "/busca/{produtoId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	ProdutoResponse buscaProdutoPorId(@PathVariable Long idProduto);
+	ProdutoResponse buscaProdutoPorId(@PathVariable Long produtoId);
 	
 	@GetMapping(value = "/busca-todos")
 	@ResponseStatus(code = HttpStatus.OK)
 	List<ProdutoResponse> buscaTodosProdutos();
 	
-	@PatchMapping(value = "/edita/{idProduto}")
+	@PatchMapping(value = "/edita/{produtoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void editaProduto(@PathVariable Long idProduto,@RequestBody @Valid ProdutoEditaRequest produtoEdita);
+	void editaProduto(@PathVariable Long produtoId,@RequestBody @Valid ProdutoEditaRequest produtoEdita);
 	
 }

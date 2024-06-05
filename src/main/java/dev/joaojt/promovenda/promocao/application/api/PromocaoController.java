@@ -24,18 +24,18 @@ public class PromocaoController implements PromocaoAPI{
 	}
     
 	@Override
-	public PromocaoResponse buscaPromocaoPorId(Long idPromocao) {
+	public PromocaoResponse buscaPromocaoPorId(Long promocaoId) {
 		log.info("[inicia] PromocaoController - buscaPromocaoPorId");
-		log.info("[idPromocao] {}", idPromocao);
-		PromocaoResponse promocaoResponse = promocaoService.buscaPromocaoPorId(idPromocao);
+		log.info("[idPromocao] {}", promocaoId);
+		PromocaoResponse promocaoResponse = promocaoService.buscaPromocaoPorId(promocaoId);
 		log.info("[finaliza] PromocaoController - buscaPromocaoPorId");
 		return promocaoResponse;
 	}
 
 	@Override
-	public void ativaInativaPromocao(Long idPromocao, PromocaoAtivaInativaRequest promocaoAtivaInativa) {
+	public void ativaInativaPromocao(Long promocaoId, PromocaoAtivaInativaRequest promocaoAtivaInativa) {
 		log.info("[inicia] PromocaoController - ativaInativaPromocao");
-		promocaoService.ativaInativaPromocao(idPromocao, promocaoAtivaInativa);
+		promocaoService.ativaInativaPromocao(promocaoId, promocaoAtivaInativa);
 		log.info("[finaliza] PromocaoController - ativaInativaPromocao");			
 	}
 
@@ -48,16 +48,16 @@ public class PromocaoController implements PromocaoAPI{
 	}
 
 	@Override
-	public void deletaPromocao(Long idPromocao) {
+	public void deletaPromocao(Long promocaoId) {
 		log.info("[inicia] PromocaoController - deletaPromocao");			
-		promocaoService.deletaPromocao(idPromocao);
+		promocaoService.deletaPromocao(promocaoId);
 		log.info("[finaliza] PromocaoController - deletaPromocao");		
 	}
 
 	@Override
-	public void editaPromocao(Long idPromocao, PromocaoEditaRequest promocaoEdita) {
+	public void editaPromocao(Long promocaoId, PromocaoEditaRequest promocaoEdita) {
 		log.info("[inicia] PromocaoController - editaPromocao");			
-		promocaoService.editaPromocao(idPromocao, promocaoEdita);
+		promocaoService.editaPromocao(promocaoId, promocaoEdita);
 		log.info("[finaliza] PromocaoController - editaPromocao");		
 	}
 

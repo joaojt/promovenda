@@ -21,13 +21,13 @@ public interface PedidoItemAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	PedidoComItensResponse inserePedidoItem(@RequestBody @Valid PedidoItemNovoRequest pedidoItemNovo);
 	
-	@DeleteMapping(value = "/deleta/idpedido/{idPedido}/idproduto/{idProduto}")
+	@DeleteMapping(value = "/deleta/pedidoid/{pedidoId}/produtoid/{produtoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void deletaPedidoItem(@PathVariable Long idPedido, @PathVariable Long idProduto);
+	void deletaPedidoItem(@PathVariable Long pedidoId, @PathVariable Long produtoId);
 	
-	@PatchMapping(value = "/edita/idpedido/{idPedido}/idproduto/{idProduto}")
+	@PatchMapping(value = "/edita/pedidoid/{pedidoId}/produtoid/{produtoId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	PedidoComItensResponse editaPedidoItem(@PathVariable Long idPedido, @PathVariable Long idProduto,
+	PedidoComItensResponse editaPedidoItem(@PathVariable Long pedidoId, @PathVariable Long produtoId,
 			@RequestBody @Valid PedidoItemEditaRequest pedidoItemEdita);
 
 }

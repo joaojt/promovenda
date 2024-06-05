@@ -24,24 +24,24 @@ public interface PromocaoAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	PromocaoResponse inserePromocao(@RequestBody @Valid PromocaoNovaRequest promocaoNova);
 	
-	@GetMapping(value = "/busca/{idPromocao}")
+	@GetMapping(value = "/busca/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	PromocaoResponse buscaPromocaoPorId(@PathVariable Long idPromocao);
+	PromocaoResponse buscaPromocaoPorId(@PathVariable Long promocaoId);
 	
 	@GetMapping(value = "/busca-todas")
 	@ResponseStatus(code = HttpStatus.OK)
 	List<PromocaoResponse> buscaTodasPromocoes();
 	
-	@PatchMapping(value = "/ativa-inativa/{idPromocao}")
+	@PatchMapping(value = "/ativa-inativa/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void ativaInativaPromocao(@PathVariable Long idPromocao,@RequestBody @Valid PromocaoAtivaInativaRequest promocaoAtivaInativa);
+	void ativaInativaPromocao(@PathVariable Long promocaoId,@RequestBody @Valid PromocaoAtivaInativaRequest promocaoAtivaInativa);
 	
-	@DeleteMapping(value = "/deleta/{idPromocao}")
+	@DeleteMapping(value = "/deleta/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void deletaPromocao(@PathVariable Long idPromocao);
+	void deletaPromocao(@PathVariable Long promocaoId);
 	
-	@PatchMapping(value = "/edita/{idPromocao}")
+	@PatchMapping(value = "/edita/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void editaPromocao(@PathVariable Long idPromocao,@RequestBody @Valid PromocaoEditaRequest promocaoEdita);
+	void editaPromocao(@PathVariable Long promocaoId,@RequestBody @Valid PromocaoEditaRequest promocaoEdita);
 	
 }

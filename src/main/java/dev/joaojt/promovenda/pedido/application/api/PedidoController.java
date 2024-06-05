@@ -25,17 +25,17 @@ public class PedidoController implements PedidoAPI{
 	}
 
 	@Override
-	public void deletaPedido(Long idPedido) {
+	public void deletaPedido(Long pedidoId) {
 		log.info("[inicia] PedidoController - deletaPedido");
-		pedidoService.deletaPedido(idPedido);
+		pedidoService.deletaPedido(pedidoId);
 		log.info("[finaliza] PedidoController - deletaPedido");	
 	}
 
 	@Override
-	public PedidoComItensResponse buscaPedidoComItens(Long idPedido) {
+	public PedidoComItensResponse buscaPedidoComItens(Long pedidoId) {
 		log.info("[inicia] PedidoController - buscaPedidoComItens");
-		log.info("[idPedido] {}", idPedido);
-		PedidoComItensResponse pedidoComItensResponse = pedidoService.buscaPedidoComItens(idPedido);
+		log.info("[pedidoId] {}", pedidoId);
+		PedidoComItensResponse pedidoComItensResponse = pedidoService.buscaPedidoComItens(pedidoId);
 		log.info("[finaliza] PedidoController - buscaPedidoComItens");
 		return pedidoComItensResponse;
 	}
