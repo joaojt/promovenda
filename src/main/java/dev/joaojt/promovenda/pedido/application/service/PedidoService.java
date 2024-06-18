@@ -17,4 +17,6 @@ public interface PedidoService {
 	
 	List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(LocalDateTime dataInicial, LocalDateTime dataFinal);
 
+	PedidoComItensResponse fechaPedido();
+
 }

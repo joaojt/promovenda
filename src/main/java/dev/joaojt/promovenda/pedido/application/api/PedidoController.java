@@ -34,7 +34,6 @@ public class PedidoController implements PedidoAPI{
 	@Override
 	public PedidoComItensResponse buscaPedidoComItens(Long pedidoId) {
 		log.info("[inicia] PedidoController - buscaPedidoComItens");
-		log.info("[pedidoId] {}", pedidoId);
 		PedidoComItensResponse pedidoComItensResponse = pedidoService.buscaPedidoComItens(pedidoId);
 		log.info("[finaliza] PedidoController - buscaPedidoComItens");
 		return pedidoComItensResponse;
@@ -46,6 +45,14 @@ public class PedidoController implements PedidoAPI{
 		List<PedidoComItensResponse> pedidosComItensResponse = pedidoService.buscaPedidosComItensPorPeriodo(dataInicial, dataFinal);
 		log.info("[finaliza] PedidoController - buscaPedidosComItensPorPeriodo");
 		return pedidosComItensResponse;
+	}
+
+	@Override
+	public PedidoComItensResponse fechaPedido() {
+		log.info("[inicia] PedidoController - fechaPedido");
+		PedidoComItensResponse pedidoComItensResponse = pedidoService.fechaPedido();
+		log.info("[finaliza] PedidoController - fechaPedido");
+		return pedidoComItensResponse;
 	}
 
 }

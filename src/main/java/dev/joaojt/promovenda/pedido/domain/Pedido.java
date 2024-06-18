@@ -61,4 +61,8 @@ public class Pedido {
 		
 	}
 
+	public void fechaPedidoAberto() {
+		this.aberto = false;		
+	}
+
 }

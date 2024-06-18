@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import dev.joaojt.promovenda.handler.APIException;
 import dev.joaojt.promovenda.pedido.application.api.PedidoComItensResponse;
 import dev.joaojt.promovenda.pedido.application.api.PedidoNovoRequest;
 import dev.joaojt.promovenda.pedido.application.api.PedidoResponse;
@@ -60,6 +62,20 @@ public class PedidoApplicationService implements PedidoService{
 		log.info("[finaliza] PedidoApplicationService - buscaPedidosComItensPorPeriodo");
 		return pedidos.stream().map(pedido -> {return new PedidoComItensResponse(pedido);
 		}).collect(Collectors.toList());
+	}
+
+	@Override
+	public PedidoComItensResponse fechaPedido() {
+		log.info("[inicia] PedidoApplicationService - fechaPedido");
+		Pedido pedido = pedidoRepository.buscaPedidoAberto();
+		if (pedido != null) {
+			pedido.fechaPedidoAberto();
+			pedidoRepository.salvaPedido(pedido);
+		} else {
+			throw APIException.build(HttpStatus.BAD_REQUEST,"Não existe pedido aberto para ser fechado.");
+		}
+		log.info("[finaliza] PedidoApplicationService - fechaPedido");
+		return new PedidoComItensResponse(pedido);
 	}
 	
 }
