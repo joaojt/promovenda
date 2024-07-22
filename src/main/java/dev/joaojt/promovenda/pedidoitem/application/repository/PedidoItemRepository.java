@@ -20,4 +20,6 @@ public interface PedidoItemRepository {
 
 	void buscaSeIdPromocaoExisteNaPedidoItem(Long promocaoId);
 
+	List<PedidoItem> buscaItensPorQtde(Integer qtde);
+
 }

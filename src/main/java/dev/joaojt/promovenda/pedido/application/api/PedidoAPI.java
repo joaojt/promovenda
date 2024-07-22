@@ -38,7 +38,12 @@ public interface PedidoAPI {
 	List<PedidoComItensResponse> buscaPedidosComItensPorPeriodo(@RequestParam LocalDateTime dataInicial,
 			@RequestParam LocalDateTime dataFinal);
 	
+	@GetMapping(value = "/busca-pedidos-por-qtde")
+	@ResponseStatus(code = HttpStatus.OK)
+	List<PedidoComItensResponse> buscaPedidosComItensPorQtde(@RequestParam Integer qtde);
+	
 	@PatchMapping(value = "/fecha-pedido")
 	@ResponseStatus(code = HttpStatus.OK)
 	PedidoComItensResponse fechaPedido();	
+	
 }

@@ -35,6 +35,12 @@ public class PedidoComItensResponse {
 		return itens.stream()
 				.mapToDouble(PedidoItem::getVlrTotal)
 				.sum();
-	}    
+	}
+
+	public static List<PedidoComItensResponse> converter(List<Pedido> pedidos) {
+		return pedidos.stream()
+				.map(PedidoComItensResponse::new)
+				.collect(Collectors.toList());
+	}      	
     
 }

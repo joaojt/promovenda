@@ -26,7 +26,9 @@ public class PedidoItemResponse {
 		this.qtde = pedidoItem.getQtde();
 		this.vlrUnitario = pedidoItem.getVlrUnitario();
 		this.vlrTotal = pedidoItem.getVlrTotal();
-		this.descPromocao = pedidoItem.getPromocao() != null ? pedidoItem.getPromocao().getDescPromocao() : null;
+		this.descPromocao = pedidoItem.getPromocao() != null 
+				? pedidoItem.getPromocao().getDescPromocao() 
+				: null;
 	}
 	
 	public static List<PedidoItemResponse> converter(List<PedidoItem> pedidoItens) {

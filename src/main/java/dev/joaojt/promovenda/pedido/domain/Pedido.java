@@ -1,6 +1,7 @@
 package dev.joaojt.promovenda.pedido.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,5 +65,14 @@ public class Pedido {
 	public void fechaPedidoAberto() {
 		this.aberto = false;		
 	}
+	
+    // Construtor utilizado pelo metodo PedidoApplicationService - buscaPedidosComItensPorQtde
+    public Pedido(Pedido pedido) {
+        this.id = pedido.getId();
+        this.cliente = pedido.getCliente();
+        this.data = pedido.getData();
+        this.aberto = pedido.getAberto();
+        this.pedidoItem = new ArrayList<>(); // Inicializa uma nova lista de itens vazia
+    }	
 
 }

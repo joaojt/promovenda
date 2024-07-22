@@ -76,5 +76,13 @@ public class PedidoItemRepositoryDB implements PedidoItemRepository{
 					"Existe(m) item(s) de pedido(s) relacionado(s) à este produto, por isso não é possível excluí-lo.");
 		}
 	}
+
+	@Override
+	public List<PedidoItem> buscaItensPorQtde(Integer qtde) {
+		log.info("[inicia] PedidoItemRepositoryDB - buscaItensPorQtde");
+		List<PedidoItem> pedidoItens = pedidoItemRepositoryJpa.findItensByQtde(qtde);
+		log.info("[finaliza] PedidoItemRepositoryDB - buscaItensPorQtde");
+		return pedidoItens;
+	}
 	
 }

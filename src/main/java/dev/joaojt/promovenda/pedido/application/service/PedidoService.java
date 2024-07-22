@@ -19,4 +19,6 @@ public interface PedidoService {
 
 	PedidoComItensResponse fechaPedido();
 
+	List<PedidoComItensResponse> buscaPedidosComItensPorQtde(Integer qtde);
+
 }

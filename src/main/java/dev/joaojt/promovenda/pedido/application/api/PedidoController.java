@@ -55,4 +55,12 @@ public class PedidoController implements PedidoAPI{
 		return pedidoComItensResponse;
 	}
 
+	@Override
+	public List<PedidoComItensResponse> buscaPedidosComItensPorQtde(Integer qtde) {
+		log.info("[inicia] PedidoController - buscaPedidosComItensPorQtde");
+		List<PedidoComItensResponse> pedidosComItensResponse = pedidoService.buscaPedidosComItensPorQtde(qtde);
+		log.info("[finaliza] PedidoController - buscaPedidosComItensPorQtde");
+		return pedidosComItensResponse;
+	}
+
 }

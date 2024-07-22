@@ -12,14 +12,13 @@ import org.springframework.data.repository.query.Param;
 import dev.joaojt.promovenda.pedido.domain.Pedido;
 
 public interface PedidoRepositoryJpa extends JpaRepository<Pedido, Long>{
-	
-	@Query("select p from Pedido p where p.data between :dataInicial and :dataFinal")
+	@Query("select p from Pedido p left join fetch p.pedidoItem where p.data between :dataInicial and :dataFinal")
     List<Pedido> findPedidosByPeriodo(@Param("dataInicial") LocalDateTime dataInicial, @Param("dataFinal") LocalDateTime dataFinal);
 
 	@EntityGraph(attributePaths = {"pedidoItem", "pedidoItem.promocao"})
 	Pedido findByAberto(boolean b);
 	
     @EntityGraph(attributePaths = {"pedidoItem", "pedidoItem.promocao"})
-    Optional<Pedido> findById(Long pedidoId);
+    Optional<Pedido> findById(Long pedidoId); 
 
 }
