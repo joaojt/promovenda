@@ -10,11 +10,11 @@ public interface ProdutoService {
 
 	ProdutoResponse insereProduto(ProdutoNovoRequest produtoNovo);
 
-	ProdutoResponse buscaProdutoPorId(Long idProduto);
+	ProdutoResponse buscaProdutoPorId(Long produtoId);
 
-	void deletaProduto(Long idProduto);
+	void deletaProduto(Long produtoId);
 
-	void editaProduto(Long idProduto, ProdutoEditaRequest produtoEdita);
+	void editaProduto(Long produtoId, ProdutoEditaRequest produtoEdita);
 
 	List<ProdutoResponse> buscaTodosProdutos();
 

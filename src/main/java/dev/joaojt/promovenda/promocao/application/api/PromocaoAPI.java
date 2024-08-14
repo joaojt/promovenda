@@ -3,6 +3,7 @@ package dev.joaojt.promovenda.promocao.application.api;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +24,24 @@ public interface PromocaoAPI {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	PromocaoResponse inserePromocao(@RequestBody @Valid PromocaoNovaRequest promocaoNova);
 	
-	@GetMapping(value = "/busca/{idPromocao}")
+	@GetMapping(value = "/busca/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	PromocaoResponse buscaPromocaoPorId(@PathVariable Long idPromocao);
+	PromocaoResponse buscaPromocaoPorId(@PathVariable Long promocaoId);
 	
-	@GetMapping(value = "/buscatodas")
+	@GetMapping(value = "/busca-todas")
 	@ResponseStatus(code = HttpStatus.OK)
 	List<PromocaoResponse> buscaTodasPromocoes();
 	
-	@PatchMapping(value = "/ativainativa/{idPromocao}")
+	@PatchMapping(value = "/ativa-inativa/{promocaoId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	void ativaInativaPromocao(@PathVariable Long idPromocao,@RequestBody @Valid PromocaoAtivaInativaRequest promocaoAtivaInativa);
+	void ativaInativaPromocao(@PathVariable Long promocaoId,@RequestBody @Valid PromocaoAtivaInativaRequest promocaoAtivaInativa);
+	
+	@DeleteMapping(value = "/deleta/{promocaoId}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	void deletaPromocao(@PathVariable Long promocaoId);
+	
+	@PatchMapping(value = "/edita/{promocaoId}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	void editaPromocao(@PathVariable Long promocaoId,@RequestBody @Valid PromocaoEditaRequest promocaoEdita);
 	
 }

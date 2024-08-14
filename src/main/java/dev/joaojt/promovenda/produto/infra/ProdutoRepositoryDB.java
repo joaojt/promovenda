@@ -19,17 +19,17 @@ public class ProdutoRepositoryDB implements ProdutoRepository{
 	private final ProdutoRepositoryJpa produtoRepositoryJpa;
 	
 	@Override
-	public Produto salvaProduto(Produto produtoNovo) {
+	public Produto salvaProduto(Produto produto) {
 		log.info("[inicia] ProdutoRepositoryDB - salvaProduto");
-		Produto produto = produtoRepositoryJpa.save(produtoNovo);
+		Produto produtoSalvo = produtoRepositoryJpa.save(produto);
 		log.info("[finaliza] ProdutoRepositoryDB - salvaProduto");
-		return produto; 
+		return produtoSalvo; 
 	}
 
 	@Override
-	public Produto buscaProdutoPorId(Long idProduto) {
+	public Produto buscaProdutoPorId(Long produtoId) {
 		log.info("[inicia] ProdutoRepositoryDB - buscaProdutoPorId");
-		Produto produto = produtoRepositoryJpa.findById(idProduto)
+		Produto produto = produtoRepositoryJpa.findById(produtoId)
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Produto não encontrado."));
 		log.info("[finaliza] ProdutoRepositoryDB - buscaProdutoPorId");
 		return produto;
@@ -55,6 +55,16 @@ public class ProdutoRepositoryDB implements ProdutoRepository{
 		log.info("[inicia] ProdutoRepositoryDB - deletaTodosProdutos");
 		produtoRepositoryJpa.deleteAll();
 		log.info("[finaliza] ProdutoRepositoryDB - deletaTodosProdutos");
+	}
+	
+	@Override
+	public void buscaSeIdPromocaoExisteNaProduto(Long promocaoId) {
+		log.info("[inicia] ProdutoRepositoryDB - buscaSeIdPromocaoExisteNaProduto");
+		if (produtoRepositoryJpa.findFirstByPromocaoId(promocaoId).isPresent()) {
+			log.info("[finaliza] ProdutoRepositoryDB - buscaSeIdPromocaoExisteNaProduto");
+			throw APIException.build(HttpStatus.BAD_REQUEST,
+					"Existe(m) produto(s) relacionado(s) à esta promoção, por isso não é possível excluí-la ou editá-la.");
+		}
 	}
 	
 }

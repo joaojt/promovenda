@@ -8,8 +8,10 @@ public interface PromocaoRepository {
 	
 	Promocao salvaPromocao(Promocao promocaoNova);
 
-	Promocao buscaPromocaoPorId(Long idPromocao);
+	Promocao buscaPromocaoPorId(Long promocaoId);
 
 	List<Promocao> buscaTodasPromocoes();
+
+	void deletaPromocao(Promocao promocao);
 	
 }

@@ -6,14 +6,16 @@ import dev.joaojt.promovenda.produto.domain.Produto;
 
 public interface ProdutoRepository {
 	
-	Produto salvaProduto(Produto produtoNovo);
+	Produto salvaProduto(Produto produto);
 
-	Produto buscaProdutoPorId(Long idProduto);
+	Produto buscaProdutoPorId(Long produtoId);
 
 	void deletaProduto(Produto produto);
 
 	List<Produto> buscaTodosProdutos();
 
 	void deletaTodosProdutos();
+
+	void buscaSeIdPromocaoExisteNaProduto(Long promocaoId);
 	
 }

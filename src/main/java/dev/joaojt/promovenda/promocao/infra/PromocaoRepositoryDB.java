@@ -27,9 +27,9 @@ public class PromocaoRepositoryDB implements PromocaoRepository{
 	}
 
 	@Override
-	public Promocao buscaPromocaoPorId(Long idPromocao) {
+	public Promocao buscaPromocaoPorId(Long promocaoId) {
 		log.info("[inicia] PromocaoRepositoryDB - buscaPromocaoPorId");
-		Promocao promocao = promocaoRepositoryJpa.findById(idPromocao)
+		Promocao promocao = promocaoRepositoryJpa.findById(promocaoId)
 				.orElseThrow(() -> APIException.build(HttpStatus.BAD_REQUEST, "Promoção não encontrada."));
 		log.info("[finaliza] PromocaoRepositoryDB - buscaPromocaoPorId");
 		return promocao;
@@ -39,8 +39,15 @@ public class PromocaoRepositoryDB implements PromocaoRepository{
 	public List<Promocao> buscaTodasPromocoes() {
 		log.info("[inicia] PromocaoRepositoryDB - buscaTodasPromocoes");
 		List<Promocao> promocoes = promocaoRepositoryJpa.findAll();
-		log.info("[finaliza] PromocaoRepositoryDB - buscaTodasPromocoes");
+ 		log.info("[finaliza] PromocaoRepositoryDB - buscaTodasPromocoes");
 		return promocoes;
+	}
+
+	@Override
+	public void deletaPromocao(Promocao promocao) {
+		log.info("[inicia] PromocaoRepositoryDB - deletaPromocao");
+		promocaoRepositoryJpa.delete(promocao);
+		log.info("[finaliza] PromocaoRepositoryDB - deletaPromocao");		
 	}
 
 }
